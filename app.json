@@ -1,27 +1,34 @@
 {
-  "expo": {
-    "name": "my-app",
-    "slug": "my-app",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "expo": {
+        "name": "my-app",
+        "slug": "my-app",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./src/assets/img/Facebook.png",
+        "userInterfaceStyle": "light",
+        "splash": {
+            "image": "./src/assets/img/Facebook.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.anonymous.myapp"
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./src/assets/img/Facebook.png",
+                "backgroundColor": "#ffffff"
+            },
+            "package": "com.anonymous.myapp"
+        },
+        "web": {
+            "favicon": "./src/assets/img/Facebook.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "1cde4886-170c-473c-a79e-6c4bd5e6f726"
+            }
+        }
     }
-  }
 }
