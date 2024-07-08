@@ -1,4 +1,4 @@
 export default font = {
-    primary: "",
+    primary: "Montserrat-Regular",
     secondary: "",
 };

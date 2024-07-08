@@ -3,6 +3,9 @@ import { Ionicons } from "@expo/vector-icons"; // Thư viện icons
 //import { getColors } from "react-native-image-colors";
 import styles from "./postCartStyle";
 import { useState, useEffect } from "react";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
+import UserInfo from "./UserInfo";
 export const PostCard = ({ post }) => {
     const {
         userImage,
@@ -14,6 +17,7 @@ export const PostCard = ({ post }) => {
         caption,
     } = post;
     const [colors, setColors] = useState({});
+    const [liked, setLiked] = useState(false);
 
     // useEffect(() => {
     //     const getImageColors = async () => {
@@ -28,6 +32,8 @@ export const PostCard = ({ post }) => {
     //     getImageColors();
     // }, []);
     console.log(colors);
+    const navigation = useNavigation();
+    const toggleLike = () => setLiked(!liked);
     return (
         <View style={[styles.card, { backgroundColor: "#ccc" }]}>
             <ImageBackground
@@ -36,15 +42,12 @@ export const PostCard = ({ post }) => {
                 imageStyle={styles.imageStyle}
             >
                 <View style={styles.header}>
-                    <Image source={userImage} style={styles.userImage} />
-                    <Image
-                        source={require("../../assets/img/follow-icon.png")}
-                        style={styles.follow}
+                    <UserInfo
+                        userImage={userImage}
+                        userName={userName}
+                        postTime={postTime}
                     />
-                    <View style={styles.userInfo}>
-                        <Text style={styles.userName}>{userName}</Text>
-                        <Text style={styles.postTime}>{postTime}</Text>
-                    </View>
+
                     <Ionicons
                         name="ellipsis-horizontal"
                         size={24}
@@ -53,14 +56,18 @@ export const PostCard = ({ post }) => {
                 </View>
                 <View style={styles.actions}>
                     <View style={styles.subActions}>
-                        <View style={styles.commentSection}>
+                        <TouchableOpacity
+                            onPress={toggleLike}
+                            style={styles.commentSection}
+                        >
                             <Ionicons
-                                name="heart-outline"
+                                name={liked ? "heart" : "heart-outline"}
                                 size={20}
-                                color="white"
+                                color={liked ? "red" : "white"}
                             />
                             <Text style={styles.comments}>{likes}</Text>
-                        </View>
+                        </TouchableOpacity>
+
                         <View style={styles.commentSection}>
                             <Ionicons
                                 name="chatbubble-outline"
@@ -90,16 +97,20 @@ export const PostCard = ({ post }) => {
                 </View>
             </ImageBackground>
             <View style={styles.caption}>
-                <Text
-                    style={[
-                        {
-                            fontSize: 13,
-                            fontWeight: 300,
-                        },
-                    ]}
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("detail-post", { post })}
                 >
-                    {caption}
-                </Text>
+                    <Text
+                        style={[
+                            {
+                                fontSize: 13,
+                                fontWeight: 300,
+                            },
+                        ]}
+                    >
+                        {caption}
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     );

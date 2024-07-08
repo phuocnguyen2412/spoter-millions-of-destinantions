@@ -18,6 +18,7 @@
         "expo-dev-client": "~4.0.19",
         "expo-status-bar": "~1.12.1",
         "fs": "^0.0.1-security",
+        "iconsax-react-native": "^0.0.8",
         "material-icons": "^1.13.12",
         "native-base": "^3.4.28",
         "nativewind": "^2.0.11",
