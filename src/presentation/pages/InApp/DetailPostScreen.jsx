@@ -17,7 +17,8 @@ import {
 import UserInfo from "../../components/UserInfo";
 import { Ionicons } from "@expo/vector-icons";
 import Comment from "../../components/Comment";
-import InputComponent from "../../components/InputComponent";
+
+import Back from "../../../assets/img/Button/Back.svg";
 
 const DetailPostScreen = ({ route }) => {
     const navigation = useNavigation();
@@ -46,6 +47,7 @@ const DetailPostScreen = ({ route }) => {
         comments,
         caption,
     } = route.params.post;
+    console.log(userName);
     const [liked, setLiked] = useState(false);
 
     const toggleLike = () => {
@@ -81,23 +83,30 @@ const DetailPostScreen = ({ route }) => {
     ];
 
     return (
-        <View style={{ flex: 1 }}>
+        <View className="flex-1 ">
             <ScrollView>
-                <View style={styles.container} className="bg-white">
-                    <View style={styles.header}>
-                        <UserInfo
-                            textDark
-                            userImage={{ uri: userImage.uri }}
-                            userName={userName}
-                            postTime={postTime}
-                        />
-                        <Ionicons
-                            name="ellipsis-horizontal"
-                            size={24}
-                            color="black"
-                        />
+                <View className="bg-white p-6">
+                    <View className="flex-row justify-between items-center mb-2">
+                        <View className="flex-row items-center flex-1">
+                            <UserInfo
+                                textDark={true}
+                                userImage={{ uri: userImage.uri }}
+                                userName={userName}
+                                postTime={postTime}
+                            />
+                        </View>
+                        <View>
+                            <Ionicons
+                                name="ellipsis-horizontal"
+                                size={24}
+                                color="black"
+                            />
+                        </View>
                     </View>
-                    <Text style={styles.caption}>{caption}</Text>
+
+                    <Text className="text-black text-sm font-normal font-['Montserrat'] leading-none mb-3">
+                        {caption}
+                    </Text>
                     <Image
                         source={postImage}
                         style={styles.image}
@@ -111,7 +120,7 @@ const DetailPostScreen = ({ route }) => {
                             marginTop: 12,
                         }}
                     ></View>
-                    <View style={styles.actions}>
+                    <View style={styles.actions} className="mb-5">
                         <View style={styles.subActions}>
                             <View style={styles.commentSection}>
                                 <TouchableOpacity
@@ -159,7 +168,7 @@ const DetailPostScreen = ({ route }) => {
                     </View>
                 </View>
             </ScrollView>
-            <View className="px-4 pt-3 bg-white">
+            <View className="px-4 py-3 bg-white">
                 <View className="bg-[#E5E5E5] pt-4  px-3 rounded-2xl">
                     <TextInput
                         className="w-full mb-2"
@@ -201,20 +210,6 @@ const DetailPostScreen = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-    },
-    header: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    caption: {
-        color: "black",
-        fontSize: 14,
-        fontWeight: "normal",
-        marginVertical: 8,
-    },
     image: {
         borderRadius: 18,
         width: "100%",
@@ -224,7 +219,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 8,
-        marginBottom: 8,
+        marginBottom: 16,
     },
     subActions: {
         flexDirection: "row",

@@ -29,6 +29,22 @@
             "eas": {
                 "projectId": "1cde4886-170c-473c-a79e-6c4bd5e6f726"
             }
-        }
+        },
+        "plugins": [
+            [
+                "expo-camera",
+                {
+                    "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+                    "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+                    "recordAudioAndroid": true
+                }
+            ],
+            [
+                "expo-font",
+                {
+                    "fonts": ["./src/assets/fonts/*.ttf"]
+                }
+            ]
+        ]
     }
 }

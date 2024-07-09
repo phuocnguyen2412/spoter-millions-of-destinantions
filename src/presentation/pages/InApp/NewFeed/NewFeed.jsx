@@ -1,9 +1,15 @@
 import React from "react";
 
-import { ScrollView, View, Text, StyleSheet, Image } from "react-native";
+import { ScrollView, View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { PostCard } from "../../../components/PostCard";
 import color from "../../../contants/color";
+import { Image } from "expo-image";
+import NewFeedLogo from "../../../../assets/img/Button/new-posts-logo.svg";
+import SvgIcon from "../../../components/SvgIcon";
+import { NewPostLogo } from "../../../../assets/img/Button";
+import { FlashList } from "@shopify/flash-list";
+
 const NewFeed = () => {
     const info = {
         userImage: {
@@ -19,12 +25,13 @@ const NewFeed = () => {
         caption:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. 😁",
     };
+    const data = [info, info, info, info];
+
     return (
-        <>
+        <View>
             <View style={styles.header}>
-                <Image
-                    source={require("../../../../assets/img/new-post-icon.jpg")}
-                />
+                <NewPostLogo />
+
                 <View style={styles.headerIcons}>
                     <Ionicons
                         name="notifications-outline"
@@ -34,13 +41,14 @@ const NewFeed = () => {
                     <Ionicons name="map-outline" size={24} color="black" />
                 </View>
             </View>
-            <ScrollView contentContainerStyle={styles.scrollView}>
-                <PostCard post={info} />
-                <PostCard post={info} />
-                <PostCard post={info} />
-                <PostCard post={info} />
-            </ScrollView>
-        </>
+            <FlashList
+                data={data}
+                renderItem={({ item }) => {
+                    return <PostCard post={item} />;
+                }}
+                estimatedItemSize={200}
+            />
+        </View>
     );
 };
 
@@ -50,13 +58,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#f5f5f5",
     },
     header: {
-        padding: 20,
-
+        padding: 10,
         alignItems: "center",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-
         backgroundColor: "white",
         borderBottomWidth: 1,
         borderBottomColor: "#e0e0e0",

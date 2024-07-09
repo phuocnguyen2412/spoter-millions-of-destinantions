@@ -27,18 +27,15 @@ const LoginScreen = () => {
     };
 
     return (
-        <View
-            className="flex-1 justify-end"
-            style={{ backgroundColor: color.primary }}
-        >
-            <View className="flex-row justify-center">
-                <Image source={require("../../../../assets/img/logo.png")} />
+        <View className="flex-1" style={{ backgroundColor: color.white }}>
+            <View className="flex-row justify-center my-14">
+                <Image
+                    source={require("../../../../assets/img/logo-small.jpg")}
+                />
             </View>
 
-            <View className="px-5 py-4 bg-white rounded-t-3xl">
-                <Text className="text-center font-bold mb-5 text-2xl ">
-                    Login
-                </Text>
+            <View className="px-5 py-4 bg-white rounded-t-3xl ">
+                <Text className=" font-bold mb-5 text-2xl ">Login</Text>
                 <View>
                     <InputComponent
                         value={userInfo.username}
@@ -59,15 +56,19 @@ const LoginScreen = () => {
                     />
                     <Button
                         style={{ backgroundColor: color.primary }}
-                        className="mb-5 w-full rounded-xl"
+                        className="mb-5 w-full rounded-xl mt-8"
                         isLoading={isLoading}
                         onPress={handleLogin}
                     >
                         Continue
                     </Button>
                 </View>
-
-                <Text className="text-center mb-4">or Log in with</Text>
+                <View className="w-[294px] h-[0px] border border-neutral-500 mx-auto"></View>
+                <View className="mb-4 relative bottom-3 bg-white inline">
+                    <Text className=" text-center text-neutral-500 text-sm font-medium font-['Montserrat'] leading-none inline">
+                        or Log in with
+                    </Text>
+                </View>
 
                 <View className="flex-row gap-3 justify-center mb-4">
                     <FontAwesome

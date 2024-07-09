@@ -28,9 +28,7 @@ const Register = () => {
             className="flex-1 justify-end"
             style={{ backgroundColor: color.primary }}
         >
-            <View className="flex-row justify-center">
-                <Image source={require("../../../../assets/img/logo.png")} />
-            </View>
+            <View className="flex-row justify-center"></View>
 
             <View className="p-4 bg-white rounded-t-3xl">
                 <Text className="text-center font-bold mb-5 text-2xl ">

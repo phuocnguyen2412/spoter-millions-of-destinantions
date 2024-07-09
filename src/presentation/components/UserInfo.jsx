@@ -1,7 +1,16 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-const UserInfo = ({ userImage, postTime, userName, textDark = false }) => {
+const UserInfo = ({
+    userImage = {
+        uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY-hjuFaNMnEAp28Q9Mo7x6QK_IyHnKdOqqA&s",
+    },
+    postTime,
+    userName,
+    textDark = false,
+    disableAdd = false,
+}) => {
+    console.log(textDark ? "black" : "white");
     const styles = StyleSheet.create({
         userImage: {
             width: 40,
@@ -14,23 +23,16 @@ const UserInfo = ({ userImage, postTime, userName, textDark = false }) => {
         },
         userName: {
             color: textDark ? "black" : "white",
-            fontFamily: "Montserrat-Medium",
-            fontSize: 14,
-            fontWeight: "500",
             textShadowColor: !textDark ? "rgba(0, 0, 0, 0.60)" : undefined,
             textShadowOffset: !textDark ? { width: 0, height: 2 } : undefined,
             textShadowRadius: !textDark ? 4 : undefined,
-            letterSpacing: 0.28,
         },
         postTime: {
             color: textDark ? "black" : "white",
-            fontFamily: "Montserrat-Medium",
-            fontSize: 12,
-            fontWeight: "300",
+
             textShadowColor: !textDark ? "rgba(0, 0, 0, 0.60)" : undefined,
             textShadowOffset: !textDark ? { width: 0, height: 2 } : undefined,
             textShadowRadius: !textDark ? 4 : undefined,
-            letterSpacing: 0.28,
         },
         follow: {
             position: "absolute",
@@ -39,17 +41,29 @@ const UserInfo = ({ userImage, postTime, userName, textDark = false }) => {
         },
     });
     return (
-        <>
+        <View className="relative flex-row">
             <Image source={userImage} style={styles.userImage} />
-            <Image
-                source={require("../../assets/img/follow-icon.png")}
-                style={styles.follow}
-            />
+            {!disableAdd && (
+                <Image
+                    source={require("../../assets/img/follow-icon.png")}
+                    style={styles.follow}
+                />
+            )}
             <View style={styles.userInfo}>
-                <Text style={styles.userName}>{userName}</Text>
-                <Text style={styles.postTime}>{postTime}</Text>
+                <Text
+                    style={styles.userName}
+                    className="text-sm font-medium font-['Montserrat'] leading-none tracking-tight mb-[2]"
+                >
+                    {userName}
+                </Text>
+                <Text
+                    style={styles.postTime}
+                    className="text-[11px] font-light font-['Montserrat'] leading-3"
+                >
+                    {postTime}
+                </Text>
             </View>
-        </>
+        </View>
     );
 };
 

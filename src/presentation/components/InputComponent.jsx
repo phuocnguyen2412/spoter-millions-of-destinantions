@@ -17,12 +17,12 @@ const InputComponent = ({
                     <Text className="text-gray-700 mb-1 ml-4">{text}</Text>
                 )}
             </View>
-            <View className="flex-row item-center justify-center items-center px-2 rounded-xl shadow border border-neutral-300 my-2  h-12">
+            <View className="flex-row item-center justify-center items-center px-5 py-2 rounded-[35px] shadow border border-neutral-300 my-2  h-12">
                 {affix && affix}
                 <TextInput
                     secureTextEntry={isPassword}
                     value={value}
-                    className="flex-1 px-3 text-neutral-600 text-base font-normal font-['Montserrat'] leading-none tracking-tight"
+                    className="flex-1 px-5 text-neutral-600 text-base font-normal font-['Montserrat'] leading-none tracking-tight"
                     placeholder={placeholder}
                     onChangeText={onChangeText}
                     placeholderTextColor="gray"
