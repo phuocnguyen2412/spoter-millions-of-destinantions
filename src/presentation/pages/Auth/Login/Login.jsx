@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Image } from "react-native";
 import { FontAwesome, AntDesign, Ionicons } from "@expo/vector-icons";
 import { Button, Heading, Input, Stack, Text } from "native-base";
@@ -7,20 +7,50 @@ import styles from "./styleLogin";
 import authService from "../../../../services/auth.service";
 import InputComponent from "../../../components/InputComponent";
 import { Lock, User } from "iconsax-react-native";
+import {
+    Apple,
+    Facebook,
+    Google,
+    WhatsApp,
+} from "../../../../assets/img/Button";
+import {
+    getDataFromStorage,
+    setDataStorage,
+} from "../../../../helpers/storage";
 
 const LoginScreen = () => {
     const [show, setShow] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setUserInfo] = useState({});
     const navigation = useNavigation();
+    useEffect(() => {
+        const handleLogin = async () => {
+            try {
+                const token = await getDataFromStorage("account");
+                console.log(token);
+                const res = await authService.refreshToken(token.accessToken);
+                await setDataStorage("account", res.data);
+                navigation.replace("in-app", { screen: "NewFeedScreen" });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        handleLogin();
+    }, []);
 
     const handleLogin = async () => {
         try {
+            console.log(userInfo);
             setIsLoading(true);
-            //const response = await authService.login(username, password);
+            const response = await authService.login(
+                userInfo.username.toLowerCase(),
+                userInfo.password
+            );
+
+            await setDataStorage("account", response.data);
             navigation.replace("in-app", { screen: "NewFeedScreen" });
         } catch (error) {
-            console.log(error.message);
+            console.log(error);
         } finally {
             setIsLoading(false);
         }
@@ -28,14 +58,16 @@ const LoginScreen = () => {
 
     return (
         <View className="flex-1" style={{ backgroundColor: color.white }}>
-            <View className="flex-row justify-center my-14">
+            <View className="flex-row justify-center my-10">
                 <Image
                     source={require("../../../../assets/img/logo-small.jpg")}
                 />
             </View>
 
-            <View className="px-5 py-4 bg-white rounded-t-3xl ">
-                <Text className=" font-bold mb-5 text-2xl ">Login</Text>
+            <View className="px-5 pt-4 pb-[30.5] bg-white rounded-t-3xl ">
+                <Text className="text-black text-2xl font-semibold font-['Montserrat'] leading-normal mb-5">
+                    Sign in
+                </Text>
                 <View>
                     <InputComponent
                         value={userInfo.username}
@@ -56,7 +88,7 @@ const LoginScreen = () => {
                     />
                     <Button
                         style={{ backgroundColor: color.primary }}
-                        className="mb-5 w-full rounded-xl mt-8"
+                        className="mb-7 w-full rounded-xl py-5 text-center text-neutral-700 text-base font-medium font-['Montserrat'] leading-[18px]"
                         isLoading={isLoading}
                         onPress={handleLogin}
                     >
@@ -64,29 +96,39 @@ const LoginScreen = () => {
                     </Button>
                 </View>
                 <View className="w-[294px] h-[0px] border border-neutral-500 mx-auto"></View>
-                <View className="mb-4 relative bottom-3 bg-white inline">
+                <View className="mb-3 relative bottom-3 bg-white inline">
                     <Text className=" text-center text-neutral-500 text-sm font-medium font-['Montserrat'] leading-none inline">
                         or Log in with
                     </Text>
                 </View>
 
-                <View className="flex-row gap-3 justify-center mb-4">
-                    <FontAwesome
-                        name="facebook-square"
-                        size={40}
-                        color="#3b5998"
-                    />
-                    <AntDesign name="google" size={40} color="#DB4437" />
-                    <Ionicons name="logo-apple" size={40} color="black" />
-                    <Ionicons name="logo-whatsapp" size={40} color="#25D366" />
+                <View className="flex-row gap-x-3 justify-center mb-[150]">
+                    <View>
+                        <Facebook />
+                    </View>
+                    <View>
+                        <Google />
+                    </View>
+                    <View>
+                        <Apple />
+                    </View>
+                    <View>
+                        <WhatsApp />
+                    </View>
                 </View>
 
                 <Text
-                    className=" text-center"
+                    className="text-center text-neutral-400 text-sm font-normal font-['Open Sans'] leading-none tracking-tight"
                     onPress={() => navigation.navigate("register")}
                 >
-                    Don't have an account yet?{" "}
-                    <Text style={styles.signUpLink}>Sign up</Text>
+                    Don't have an account yet?
+                    <Text
+                        style={{ color: color.primary }}
+                        className="text-center text-sky-800 text-sm font-normal font-['Open Sans'] underline leading-none tracking-tight"
+                    >
+                        {" "}
+                        Sign up
+                    </Text>
                 </Text>
             </View>
         </View>

@@ -1,11 +1,12 @@
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { Image } from "expo-image";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import {
+    Delete,
     Flash,
     RotateCamera,
     TakingPhoto,
@@ -17,6 +18,18 @@ const Camera = () => {
     const [image, setImage] = useState(null);
     const imageRef = useRef(null);
     const navigation = useNavigation();
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        if (isFocused) {
+            navigation.getParent().setOptions({
+                tabBarStyle: { display: "none" },
+            });
+        } else {
+            navigation.getParent().setOptions({
+                tabBarStyle: { display: "flex" },
+            });
+        }
+    }, [isFocused]);
     if (!permission) {
         // Camera permissions are still loading.
         return <View />;
@@ -43,7 +56,7 @@ const Camera = () => {
                 const image = await imageRef.current.takePictureAsync();
                 setImage(image);
             } catch (e) {
-                console.log(e);
+                console.error(e);
             }
         }
     };
@@ -77,10 +90,18 @@ const Camera = () => {
                     cameraRatio="1:1"
                     style={styles.camera}
                     facing={facing}
-                    className="flex-row items-end"
+                    className="flex-column justify-between"
                     ref={imageRef}
                 >
-                    <View className="h-[150] w-full bg-white flex-row items-center">
+                    <View className="flex-row bg-white">
+                        <TouchableOpacity
+                            onPress={() => navigation.goBack()}
+                            className="flex-row"
+                        >
+                            <Delete />
+                        </TouchableOpacity>
+                    </View>
+                    <View className="h-[150] w-full bg-white">
                         <View className="flex-row justify-between items-center w-full py-6 px-10">
                             <TouchableOpacity onPress={toggleCameraFacing}>
                                 <Flash />

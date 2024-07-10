@@ -31,7 +31,7 @@ export const PostCard = ({ post }) => {
 
     //     getImageColors();
     // }, []);
-    console.log(colors);
+
     const navigation = useNavigation();
     const toggleLike = () => setLiked(!liked);
     return (
@@ -41,7 +41,7 @@ export const PostCard = ({ post }) => {
                 style={styles.postImage}
                 imageStyle={styles.imageStyle}
             >
-                <View style={styles.header}>
+                <View className="flex-row justify-between">
                     <UserInfo
                         userImage={userImage}
                         userName={userName}

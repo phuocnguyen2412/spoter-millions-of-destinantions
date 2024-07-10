@@ -1,6 +1,12 @@
 import React from "react";
 
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import {
+    ScrollView,
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { PostCard } from "../../../components/PostCard";
 import color from "../../../contants/color";
@@ -9,6 +15,7 @@ import NewFeedLogo from "../../../../assets/img/Button/new-posts-logo.svg";
 import SvgIcon from "../../../components/SvgIcon";
 import { NewPostLogo } from "../../../../assets/img/Button";
 import { FlashList } from "@shopify/flash-list";
+import { useNavigation } from "@react-navigation/native";
 
 const NewFeed = () => {
     const info = {
@@ -26,69 +33,39 @@ const NewFeed = () => {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. 😁",
     };
     const data = [info, info, info, info];
-
+    const navigation = useNavigation();
     return (
-        <View>
-            <View style={styles.header}>
+        <View className="flex-1 bg-white">
+            <View className="px-6 py-1 flex-row justify-between items-center">
                 <NewPostLogo />
 
-                <View style={styles.headerIcons}>
-                    <Ionicons
-                        name="notifications-outline"
-                        size={24}
-                        color="black"
-                    />
-                    <Ionicons name="map-outline" size={24} color="black" />
+                <View className="flex-row items-centers gap-x-4">
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("notification")}
+                    >
+                        <Ionicons
+                            name="notifications-outline"
+                            size={24}
+                            color="black"
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate("map")}
+                    >
+                        <Ionicons name="map-outline" size={24} color="black" />
+                    </TouchableOpacity>
                 </View>
             </View>
-            <FlashList
-                data={data}
-                renderItem={({ item }) => {
-                    return <PostCard post={item} />;
-                }}
-                estimatedItemSize={200}
-            />
+            <View className="flex-1 px-6">
+                <FlashList
+                    showsVerticalScrollIndicator={false}
+                    data={data}
+                    renderItem={({ item }) => <PostCard post={item} />}
+                    estimatedItemSize={10}
+                />
+            </View>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#f5f5f5",
-    },
-    header: {
-        padding: 10,
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: "white",
-        borderBottomWidth: 1,
-        borderBottomColor: "#e0e0e0",
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-    },
-    headerIcons: {
-        flexDirection: "row",
-        width: 60,
-        justifyContent: "space-between",
-    },
-    scrollView: {
-        backgroundColor: color.white,
-        padding: 20,
-    },
-    footer: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-        paddingVertical: 10,
-        backgroundColor: "white",
-        borderTopWidth: 1,
-        borderTopColor: "#e0e0e0",
-    },
-});
 
 export default NewFeed;

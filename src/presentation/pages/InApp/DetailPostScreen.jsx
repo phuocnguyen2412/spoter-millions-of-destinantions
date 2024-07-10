@@ -16,16 +16,31 @@ import {
 } from "react-native";
 import UserInfo from "../../components/UserInfo";
 import { Ionicons } from "@expo/vector-icons";
-import Comment from "../../components/Comment";
 
 import Back from "../../../assets/img/Button/Back.svg";
+import {
+    CameraTextBox,
+    Comment,
+    Gif,
+    HeardInActive,
+    HeartActive,
+    Navigation,
+    Save,
+    Send,
+    Smile,
+    Sticker,
+} from "../../../assets/img/Button";
 
+import CommentComponent, {
+    Comment as CommentIcon,
+} from "../../components/Comment";
 const DetailPostScreen = ({ route }) => {
     const navigation = useNavigation();
-    const isFocused = useIsFocused(); // Check if the screen is focused
+    // Check if the screen is focused
     const [commentText, setCommentText] = useState("");
-
+    const [liked, setLiked] = useState(false);
     // Use the focus state to hide the tab bar
+    const isFocused = useIsFocused();
     useEffect(() => {
         if (isFocused) {
             navigation.getParent().setOptions({
@@ -47,8 +62,6 @@ const DetailPostScreen = ({ route }) => {
         comments,
         caption,
     } = route.params.post;
-    console.log(userName);
-    const [liked, setLiked] = useState(false);
 
     const toggleLike = () => {
         setLiked(!liked);
@@ -88,7 +101,12 @@ const DetailPostScreen = ({ route }) => {
                 <View className="bg-white p-6">
                     <View className="flex-row justify-between items-center mb-2">
                         <View className="flex-row items-center flex-1">
+                            <TouchableOpacity onPress={navigation.goBack}>
+                                <Back />
+                            </TouchableOpacity>
+
                             <UserInfo
+                                style={{ marginLeft: 16 }}
                                 textDark={true}
                                 userImage={{ uri: userImage.uri }}
                                 userName={userName}
@@ -118,89 +136,66 @@ const DetailPostScreen = ({ route }) => {
                             width: "100%",
                             backgroundColor: "#D4D4D4",
                             marginTop: 12,
+                            marginBottom: 12,
                         }}
                     ></View>
-                    <View style={styles.actions} className="mb-5">
-                        <View style={styles.subActions}>
-                            <View style={styles.commentSection}>
+                    <View className="mb-5 flex-row justify-between">
+                        <View className="flex-row gap-x-4 items-center">
+                            <View>
                                 <TouchableOpacity
                                     onPress={toggleLike}
-                                    style={styles.commentSection}
+                                    className="flex-row"
                                 >
-                                    <Ionicons
-                                        name={liked ? "heart" : "heart-outline"}
-                                        size={28}
-                                        color={liked ? "red" : "black"}
-                                    />
-                                    <Text style={styles.comments}>{likes}</Text>
+                                    {liked ? (
+                                        <HeartActive />
+                                    ) : (
+                                        <HeardInActive />
+                                    )}
+                                    <Text>{likes}</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={styles.commentSection}>
-                                <Ionicons
-                                    name="chatbubble-outline"
-                                    size={28}
-                                    color="black"
-                                />
-                                <Text style={styles.comments}>{comments}</Text>
+                            <View className="flex-row items-center">
+                                <Comment />
+                                <Text>{comments}</Text>
                             </View>
                         </View>
-                        <View style={styles.subActions}>
-                            <View style={styles.commentSection}>
-                                <Ionicons
-                                    name="paper-plane-outline"
-                                    size={28}
-                                    color="black"
-                                />
+                        <View className="flex-row items-center gap-x-4">
+                            <View>
+                                <Navigation />
                             </View>
-                            <View style={styles.commentSection}>
-                                <Ionicons
-                                    name="bookmark-outline"
-                                    size={28}
-                                    color="black"
-                                />
+                            <View>
+                                <Save />
                             </View>
                         </View>
                     </View>
                     <View>
                         {commentsFake.map((commentInfo, index) => (
-                            <Comment key={index} commentInfo={commentInfo} />
+                            <CommentComponent
+                                key={index}
+                                commentInfo={commentInfo}
+                            />
                         ))}
                     </View>
                 </View>
             </ScrollView>
             <View className="px-4 py-3 bg-white">
-                <View className="bg-[#E5E5E5] pt-4  px-3 rounded-2xl">
+                <View className="bg-[#E5E5E5] p-4 rounded-2xl">
                     <TextInput
-                        className="w-full mb-2"
-                        placeholder="Wricte a comment..."
+                        className="w-full mb-[19] text-neutral-600 text-xs font-normal font-['Montserrat'] leading-[14px] tracking-tight"
+                        placeholder="Write a comment..."
                         value={commentText}
                         onChangeText={setCommentText}
+                        placeholderTextColor={"#525252"}
                     />
                     <View className="flex-row justify-between">
                         <View style={styles.iconContainer} className="gap-2">
-                            <Ionicons
-                                name="happy-outline"
-                                size={24}
-                                color="gray"
-                            />
-                            <Ionicons
-                                name="camera-outline"
-                                size={24}
-                                color="gray"
-                            />
-                            <Ionicons
-                                name="image-outline"
-                                size={24}
-                                color="gray"
-                            />
-                            <Ionicons
-                                name="attach-outline"
-                                size={24}
-                                color="gray"
-                            />
+                            <Smile />
+                            <CameraTextBox />
+                            <Gif />
+                            <Sticker />
                         </View>
                         <TouchableOpacity style={styles.sendButton}>
-                            <Ionicons name="send" size={24} color="gray" />
+                            <Send />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -253,9 +248,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 8,
         backgroundColor: "#f0f0f0",
-    },
-    sendButton: {
-        padding: 8,
     },
 });
 

@@ -13,6 +13,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import dayjs from "dayjs";
 import Accordion from "../../../components/Accordion";
 import feedService from "../../../../services/feed.service";
+import { Delete } from "../../../../assets/img/Button";
 
 const CreatePostScreen = () => {
     const route = useRoute();
@@ -37,10 +38,7 @@ const CreatePostScreen = () => {
                     <TouchableOpacity
                         onPress={() => navigation.navigate("camera")}
                     >
-                        <Image
-                            source={require("../../../../assets/img/Button/delete-cross.svg")}
-                            className="w-4 h-4 mr-5"
-                        />
+                        <Delete />
                     </TouchableOpacity>
                     <Text className="text-neutral-900 text-base leading-[18px]">
                         Create a post

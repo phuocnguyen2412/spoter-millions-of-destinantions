@@ -27,10 +27,12 @@ export default function App() {
     return (
         <NativeBaseProvider>
             <SafeAreaView style={{ flex: 1 }}>
-                {/* <AppNavigation /> */}
-                <NavigationContainer>
-                    <InAppNavigation />
-                </NavigationContainer>
+                {/* <InAppNavigation /> */}
+                {/* <NavigationContainer>
+                
+                    
+                </NavigationContainer> */}
+                <AppNavigation />
             </SafeAreaView>
         </NativeBaseProvider>
     );

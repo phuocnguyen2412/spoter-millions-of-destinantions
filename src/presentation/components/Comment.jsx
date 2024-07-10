@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "react-native";
 import { Image, StyleSheet, View } from "react-native";
 
-const Comment = ({ commentInfo }) => {
+const CommentComponent = ({ commentInfo }) => {
     const { userImage, comment, time } = commentInfo;
     return (
         <View className="flex-row item-start justify-center mb-4">
@@ -35,4 +35,4 @@ const Comment = ({ commentInfo }) => {
 
 const styles = StyleSheet.create({});
 
-export default Comment;
+export default CommentComponent;

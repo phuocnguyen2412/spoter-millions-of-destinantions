@@ -9,8 +9,9 @@ const UserInfo = ({
     userName,
     textDark = false,
     disableAdd = false,
+    style,
 }) => {
-    console.log(textDark ? "black" : "white");
+    console.log(style);
     const styles = StyleSheet.create({
         userImage: {
             width: 40,
@@ -18,9 +19,7 @@ const UserInfo = ({
             borderRadius: 40,
             marginRight: 10,
         },
-        userInfo: {
-            flex: 1,
-        },
+
         userName: {
             color: textDark ? "black" : "white",
             textShadowColor: !textDark ? "rgba(0, 0, 0, 0.60)" : undefined,
@@ -29,7 +28,6 @@ const UserInfo = ({
         },
         postTime: {
             color: textDark ? "black" : "white",
-
             textShadowColor: !textDark ? "rgba(0, 0, 0, 0.60)" : undefined,
             textShadowOffset: !textDark ? { width: 0, height: 2 } : undefined,
             textShadowRadius: !textDark ? 4 : undefined,
@@ -41,7 +39,7 @@ const UserInfo = ({
         },
     });
     return (
-        <View className="relative flex-row">
+        <View className="relative flex-row" style={style}>
             <Image source={userImage} style={styles.userImage} />
             {!disableAdd && (
                 <Image
@@ -49,7 +47,7 @@ const UserInfo = ({
                     style={styles.follow}
                 />
             )}
-            <View style={styles.userInfo}>
+            <View className="ml-2">
                 <Text
                     style={styles.userName}
                     className="text-sm font-medium font-['Montserrat'] leading-none tracking-tight mb-[2]"

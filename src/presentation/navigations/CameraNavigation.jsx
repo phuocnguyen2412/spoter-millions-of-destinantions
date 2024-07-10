@@ -11,7 +11,13 @@ const CameraNavigation = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="take-photo" component={Camera} />
-            <Stack.Screen name="create-post" component={CreatePostScreen} />
+            <Stack.Screen
+                screenOptions={{
+                    fotterShown: false,
+                }}
+                name="create-post"
+                component={CreatePostScreen}
+            />
         </Stack.Navigator>
     );
 };

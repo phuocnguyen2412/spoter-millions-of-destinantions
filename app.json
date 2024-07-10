@@ -44,6 +44,12 @@
                 {
                     "fonts": ["./src/assets/fonts/*.ttf"]
                 }
+            ],
+            [
+                "@rnmapbox/maps",
+                {
+                    "RNMapboxMapsDownloadToken": "sk.eyJ1IjoicGh1b2NuZ3V5ZW4xMiIsImEiOiJjbHlmajl3ZjAwMDZ4MmpzNXl2eWdsZmN3In0.Ef7UA2QiliD-_icehOP9-g"
+                }
             ]
         ]
     }

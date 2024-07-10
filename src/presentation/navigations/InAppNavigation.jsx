@@ -76,7 +76,7 @@ const InAppNavigation = () => {
                     );
                     if (route.name === "camera")
                         return (
-                            <View className="w-[52px] h-[47px] left-0 top-0  bg-sky-900 rounded-[22px] flex-row items-center justify-center">
+                            <View className="w-[52px] h-[47px] left-0 bg-sky-900 rounded-[22px] flex-row items-center justify-center ">
                                 <Camera />
                             </View>
                         );
@@ -85,7 +85,21 @@ const InAppNavigation = () => {
                 tabBarActiveTintColor: color.primary,
                 tabBarInactiveTintColor: "white",
                 tabBarStyle: {
-                    height: 72,
+                    paddingVertical: "10px",
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "white",
+                    borderTopWidth: 0.5,
+                    borderColor: color.gray,
+
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                    elevation: 5,
                 },
             })}
         >
