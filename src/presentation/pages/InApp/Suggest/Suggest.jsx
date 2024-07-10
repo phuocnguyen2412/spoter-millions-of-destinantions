@@ -85,10 +85,9 @@ const Suggest = () => {
                     numColumns={2}
                     showsVerticalScrollIndicator={false}
                     renderItem={({ item, i }) => {
-                        console.log(i);
                         const lastNumber =
                             i.toString()[i.toString().length - 1];
-                        console.log(lastNumber);
+
                         if (lastNumber == 3 || lastNumber == 6) return null;
                         if (lastNumber == 1 || lastNumber == 4)
                             return (

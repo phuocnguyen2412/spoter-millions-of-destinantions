@@ -4,7 +4,7 @@ import { API_URL } from "@env";
 import { getDataFromStorage } from "../helpers/storage";
 
 const axiosClient = axios.create({
-    baseURL: "http://localhost:3000/api/v1",
+    baseURL: "http://10.0.2.2:3000/api/v1",
     headers: {
         "content-type": "application/json",
     },

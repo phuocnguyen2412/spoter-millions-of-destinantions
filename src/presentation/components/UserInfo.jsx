@@ -11,7 +11,7 @@ const UserInfo = ({
     disableAdd = false,
     style,
 }) => {
-    console.log(style);
+  
     const styles = StyleSheet.create({
         userImage: {
             width: 40,

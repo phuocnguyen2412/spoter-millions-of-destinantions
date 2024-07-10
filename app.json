@@ -42,12 +42,13 @@
             [
                 "expo-font",
                 {
-                    "fonts": ["./src/assets/fonts/*.ttf"]
+                    "fonts": ["./src/assets/fonts/Montserrat-Regular.ttf"]
                 }
             ],
             [
                 "@rnmapbox/maps",
                 {
+                    "RNMapboxMapsVersion": "11.0.0",
                     "RNMapboxMapsDownloadToken": "sk.eyJ1IjoicGh1b2NuZ3V5ZW4xMiIsImEiOiJjbHlmajl3ZjAwMDZ4MmpzNXl2eWdsZmN3In0.Ef7UA2QiliD-_icehOP9-g"
                 }
             ]
