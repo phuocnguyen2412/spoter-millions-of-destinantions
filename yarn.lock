@@ -5247,7 +5247,7 @@ expo-updates-interface@~0.16.2:
   resolved "https://registry.npmjs.org/expo-updates-interface/-/expo-updates-interface-0.16.2.tgz"
   integrity sha512-929XBU70q5ELxkKADj1xL0UIm3HvhYhNAOZv5DSk7rrKvLo7QDdPyl+JVnwZm9LrkNbH4wuE2rLoKu1KMgZ+9A==
 
-expo@*, expo@>=47.0.0, expo@~51.0.18:
+expo@*, expo@^51.0.18, expo@>=47.0.0:
   version "51.0.18"
   resolved "https://registry.npmjs.org/expo/-/expo-51.0.18.tgz"
   integrity sha512-QiaNq2XXjfDk009qbyBFd/5CNikcQ0ZucGlOB3ebNf3z9Q9wrfL1A9E4NqPh6sgm0VG486AYT9mNKwAfcOVCIA==
