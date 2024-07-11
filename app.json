@@ -1,7 +1,7 @@
 {
     "expo": {
-        "name": "my-app",
-        "slug": "my-app",
+        "name": "Spoter",
+        "slug": "Millions of destinations",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./src/assets/img/Facebook.png",
@@ -50,6 +50,12 @@
                 {
                     "RNMapboxMapsVersion": "11.0.0",
                     "RNMapboxMapsDownloadToken": "sk.eyJ1IjoicGh1b2NuZ3V5ZW4xMiIsImEiOiJjbHlmajl3ZjAwMDZ4MmpzNXl2eWdsZmN3In0.Ef7UA2QiliD-_icehOP9-g"
+                }
+            ],
+            [
+                "expo-location",
+                {
+                    "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
                 }
             ]
         ]

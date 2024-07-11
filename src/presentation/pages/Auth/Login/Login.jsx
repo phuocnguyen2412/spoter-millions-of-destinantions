@@ -49,6 +49,7 @@ const LoginScreen = () => {
 
             await setDataStorage("account", response.data);
             navigation.replace("in-app", { screen: "NewFeedScreen" });
+            
         } catch (error) {
             console.log(error);
         } finally {
