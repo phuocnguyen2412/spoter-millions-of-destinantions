@@ -1,13 +1,13 @@
 {
     "expo": {
-        "name": "Spoter",
-        "slug": "Millions of destinations",
+        "name": "spoter",
+        "slug": "millions-of-destinations",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./src/assets/img/Facebook.png",
+        "icon": "./src/assets/img/logo-icon.png",
         "userInterfaceStyle": "light",
         "splash": {
-            "image": "./src/assets/img/Facebook.png",
+            "image": "./src/assets/img/loading-splash.png",
             "resizeMode": "contain",
             "backgroundColor": "#ffffff"
         },
@@ -17,7 +17,7 @@
         },
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./src/assets/img/Facebook.png",
+                "foregroundImage": "./src/assets/img/loading-splash.png",
                 "backgroundColor": "#ffffff"
             },
             "package": "com.anonymous.myapp"
@@ -42,7 +42,23 @@
             [
                 "expo-font",
                 {
-                    "fonts": ["./src/assets/fonts/Montserrat-Regular.ttf"]
+                    "fonts": [
+                        "./src/assets/fonts/Montserrat-Black.ttf",
+                        "./src/assets/fonts/Montserrat-BlackItalic.ttf",
+                        "./src/assets/fonts/Montserrat-Bold.ttf",
+                        "./src/assets/fonts/Montserrat-BoldItalic.ttf",
+                        "./src/assets/fonts/Montserrat-ExtraBold.ttf",
+                        "./src/assets/fonts/Montserrat-ExtraBoldItalic.ttf",
+                        "./src/assets/fonts/Montserrat-ExtraLight.ttf",
+                        "./src/assets/fonts/Montserrat-ExtraLightItalic.ttf",
+                        "./src/assets/fonts/Montserrat-Medium.ttf",
+                        "./src/assets/fonts/Montserrat-MediumItalic.ttf",
+                        "./src/assets/fonts/Montserrat-Regular.ttf",
+                        "./src/assets/fonts/Montserrat-SemiBold.ttf",
+                        "./src/assets/fonts/Montserrat-SemiBoldItalic.ttf",
+                        "./src/assets/fonts/Montserrat-ThinItalic.ttf",
+                        "./src/assets/fonts/Montserrat-Thin.ttf"
+                    ]
                 }
             ],
             [

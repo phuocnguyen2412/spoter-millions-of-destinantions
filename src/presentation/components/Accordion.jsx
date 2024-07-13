@@ -9,6 +9,13 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import {
+    AddPhoto,
+    Checked,
+    CropPhoto,
+    Unchecked,
+} from "../../assets/img/Button";
+import { useNavigation } from "@react-navigation/native";
 const Form = ({ title, description, setChecked, checked }) => {
     return (
         <View className=" rounded-tr-[15px] shadow mb-3 px-[38] ">
@@ -23,23 +30,14 @@ const Form = ({ title, description, setChecked, checked }) => {
                     </Text>
                 </View>
                 <TouchableOpacity onPress={setChecked}>
-                    {checked ? (
-                        <Image
-                            className="w-6 h-6"
-                            source={require("../../assets/img/Button/checked.svg")}
-                        />
-                    ) : (
-                        <Image
-                            className="w-6 h-6"
-                            source={require("../../assets/img/Button/unchecked.svg")}
-                        />
-                    )}
+                    {checked ? <Checked /> : <Unchecked />}
                 </TouchableOpacity>
             </View>
         </View>
     );
 };
 const Accordion = () => {
+    const navigation = useNavigation();
     const [expanded, setExpanded] = useState(false);
     const [animation, setAnimation] = useState(new Animated.Value(1));
 
@@ -80,14 +78,9 @@ const Accordion = () => {
                 className="flex-row  justify-between bg-stone-100 px-[38] py-3 rounded-tl-[15px] rounded-tr-[15px] "
             >
                 <View className="flex-row gap-6 justify-between ">
-                    <Image
-                        source={require("../../assets/img/Button/add-photo.svg")}
-                        className="w-6 h-6"
-                    />
-
-                    <Image
-                        source={require("../../assets/img/Button/crop-photo.svg")}
-                        className="w-6 h-6"
+                    <CropPhoto />
+                    <AddPhoto
+                        onPress={() => navigation.navigate("take-photo")}
                     />
                 </View>
                 <Ionicons

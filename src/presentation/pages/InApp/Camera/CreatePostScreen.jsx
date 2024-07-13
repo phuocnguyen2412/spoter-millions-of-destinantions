@@ -62,6 +62,7 @@ const CreatePostScreen = () => {
                         Create a post
                     </Text>
                 </View>
+
                 <TouchableOpacity onPress={handleCreatePost}>
                     <Text
                         className=" text-2xl  font-semibold font-['Montserrat'] leading-7"

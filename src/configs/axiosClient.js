@@ -3,7 +3,7 @@ import { API_URL } from "@env";
 import { getDataFromStorage } from "../helpers/storage";
 
 const axiosClient = axios.create({
-    baseURL: API_URL, // sử dụng API_URL từ file .env
+    baseURL: API_URL, 
     headers: {
         "content-type": "application/json",
     },

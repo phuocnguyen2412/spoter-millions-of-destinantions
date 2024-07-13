@@ -15,7 +15,7 @@ import {
 const Camera = () => {
     const [facing, setFacing] = useState("back");
     const [permission, requestPermission] = useCameraPermissions();
-    const [image, setImage] = useState(null);
+    const [images, setImage] = useState([]);
     const imageRef = useRef(null);
     const navigation = useNavigation();
     const isFocused = useIsFocused();
@@ -54,7 +54,7 @@ const Camera = () => {
         if (imageRef) {
             try {
                 const image = await imageRef.current.takePictureAsync();
-                setImage(image);
+                setImage([...images, ...image]);
             } catch (e) {
                 console.error(e);
             }
@@ -63,63 +63,39 @@ const Camera = () => {
 
     return (
         <View style={styles.container}>
-            {image ? (
-                <View className="bg-black">
-                    <Image source={image.uri} className="w-full h-[400]" />
-                    <View className="flex-row justify-around">
-                        <TouchableOpacity
-                            onPress={() => setImage(null)}
-                            className="flex-row"
-                        >
-                            <Entypo name="ccw" size={24} color="white" />
-                            <Text className="text-white">Re-take</Text>
+            <CameraView
+                cameraRatio="1:1"
+                style={styles.camera}
+                facing={facing}
+                className="flex-column justify-between"
+                ref={imageRef}
+            >
+                <View className="flex-row bg-white">
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                        className="flex-row"
+                    >
+                        <Delete />
+                    </TouchableOpacity>
+                </View>
+                <View className="h-[150] w-full bg-white">
+                    <View className="flex-row justify-between items-center w-full py-6 px-10">
+                        <TouchableOpacity onPress={toggleCameraFacing}>
+                            <Flash />
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() =>
-                                navigation.navigate("create-post", { image })
-                            }
-                            className="flex-row"
+                            onPress={() => {
+                                textPicture();
+                            }}
                         >
-                            <Entypo name="check" size={24} color="white" />
-                            <Text className="text-white">Save</Text>
+                            <TakingPhoto />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={toggleCameraFacing}>
+                            <RotateCamera />
                         </TouchableOpacity>
                     </View>
                 </View>
-            ) : (
-                <CameraView
-                    cameraRatio="1:1"
-                    style={styles.camera}
-                    facing={facing}
-                    className="flex-column justify-between"
-                    ref={imageRef}
-                >
-                    <View className="flex-row bg-white">
-                        <TouchableOpacity
-                            onPress={() => navigation.goBack()}
-                            className="flex-row"
-                        >
-                            <Delete />
-                        </TouchableOpacity>
-                    </View>
-                    <View className="h-[150] w-full bg-white">
-                        <View className="flex-row justify-between items-center w-full py-6 px-10">
-                            <TouchableOpacity onPress={toggleCameraFacing}>
-                                <Flash />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    textPicture();
-                                }}
-                            >
-                                <TakingPhoto />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={toggleCameraFacing}>
-                                <RotateCamera />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </CameraView>
-            )}
+            </CameraView>
         </View>
     );
 };
