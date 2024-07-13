@@ -111,7 +111,10 @@ const Suggest = () => {
                                         <Image
                                             style={{
                                                 width: "100%",
-                                                height: 100,
+                                                height:
+                                                    Math.random() < 0.5
+                                                        ? 150
+                                                        : 250,
                                             }}
                                             placeholder={"loading..."}
                                             source={imgs[i + 2]}

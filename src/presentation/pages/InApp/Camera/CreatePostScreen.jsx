@@ -14,11 +14,15 @@ import dayjs from "dayjs";
 import Accordion from "../../../components/Accordion";
 import feedService from "../../../../services/feed.service";
 import { Delete } from "../../../../assets/img/Button";
+import { useEffect } from "react";
+import { getDataFromStorage } from "../../../../helpers/storage";
+import userService from "../../../../services/user.service";
 
 const CreatePostScreen = () => {
     const route = useRoute();
     const image = route.params.image;
     const [caption, setCaption] = useState("");
+    const [user, setUser] = useState({});
     const navigation = useNavigation();
     const handleCreatePost = async () => {
         const data = {
@@ -27,16 +31,30 @@ const CreatePostScreen = () => {
             longitude: 0,
             latitude: 0,
         };
-        console.log(1);
+
         const res = await feedService.createPost(data);
-        console.log(res);
     };
+
+    useEffect(() => {
+        const getUserData = async () => {
+            try {
+                const data = await userService.getMyInfo();
+
+                setUser(data.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getUserData();
+    }, []);
+
     return (
         <View className="px-6 bg-white flex-1 pt-3">
             <View className="flex-row justify-between">
-                <View className="flex-row mb-5">
+                <View className="flex-row mb-5 gap-x-4">
                     <TouchableOpacity
-                        onPress={() => navigation.navigate("camera")}
+                        className="flex-row items-center justify-center"
+                        onPress={() => navigation.navigate("take-photo")}
                     >
                         <Delete />
                     </TouchableOpacity>
@@ -63,11 +81,12 @@ const CreatePostScreen = () => {
                     <View>
                         <UserInfo
                             disableAdd={true}
-                            userName={"Phuoc Nguyen"}
+                            userName={user.name}
                             textDark={true}
                             postTime={dayjs(new Date().getTime()).format(
                                 "DD-MM-YYYY HH:mm"
                             )}
+                            userImage={{ uri: user.avatar }}
                         />
                         <TextInput
                             value={caption}
