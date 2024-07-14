@@ -4,6 +4,7 @@ import {
     useNavigation,
     useRoute,
 } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useState, useEffect } from "react";
 import {
     Image,
@@ -17,23 +18,20 @@ import {
 import UserInfo from "../../components/UserInfo";
 import { Ionicons } from "@expo/vector-icons";
 
-import Back from "../../../assets/img/Button/Back.svg";
 import {
-    CameraTextBox,
+    Back,
     Comment,
-    Gif,
     HeardInActive,
     HeartActive,
     Navigation,
     Save,
     Send,
-    Smile,
-    Sticker,
 } from "../../../assets/img/Button";
 
 import CommentComponent, {
     Comment as CommentIcon,
 } from "../../components/Comment";
+import _comments from "../../../data/comments";
 const DetailPostScreen = ({ route }) => {
     const navigation = useNavigation();
     // Check if the screen is focused
@@ -66,34 +64,6 @@ const DetailPostScreen = ({ route }) => {
     const toggleLike = () => {
         setLiked(!liked);
     };
-
-    const commentsFake = [
-        {
-            userImage:
-                "https://90rocks.com/wp-content/uploads/iamges/2021/06/24/251728936374.jpg",
-            time: "12-12-2012",
-            comment:
-                "lorem ipsum dolor sit amet, consectetur lorem ipsum dolor loremasndansjdnaksjdnjkasndasdahsuidhauisdhiuas",
-        },
-        {
-            userImage:
-                "https://90rocks.com/wp-content/uploads/iamges/2021/06/24/251728936374.jpg",
-            time: "12-12-2012",
-            comment: "lorem ipsum dolor sit amet, consectetur",
-        },
-        {
-            userImage:
-                "https://90rocks.com/wp-content/uploads/iamges/2021/06/24/251728936374.jpg",
-            time: "12-12-2012",
-            comment: "lorem ipsum dolor sit amet, consectetur",
-        },
-        {
-            userImage:
-                "https://90rocks.com/wp-content/uploads/iamges/2021/06/24/251728936374.jpg",
-            time: "12-12-2012",
-            comment: "lorem ipsum dolor sit amet, consectetur",
-        },
-    ];
 
     return (
         <View className="flex-1 ">
@@ -169,7 +139,7 @@ const DetailPostScreen = ({ route }) => {
                         </View>
                     </View>
                     <View>
-                        {commentsFake.map((commentInfo, index) => (
+                        {_comments.map((commentInfo, index) => (
                             <CommentComponent
                                 key={index}
                                 commentInfo={commentInfo}
@@ -189,10 +159,30 @@ const DetailPostScreen = ({ route }) => {
                     />
                     <View className="flex-row justify-between">
                         <View style={styles.iconContainer} className="gap-2">
-                            <Smile />
-                            <CameraTextBox />
-                            <Gif />
-                            <Sticker />
+                            <Icon
+                                name="emoticon-outline"
+                                size={24}
+                                color="#888"
+                                style={styles.icon}
+                            />
+                            <Icon
+                                name="camera-outline"
+                                size={24}
+                                color="#888"
+                                style={styles.icon}
+                            />
+                            <Icon
+                                name="gif"
+                                size={24}
+                                color="#888"
+                                style={styles.icon}
+                            />
+                            <Icon
+                                name="sticker-outline"
+                                size={24}
+                                color="#888"
+                                style={styles.icon}
+                            />
                         </View>
                         <TouchableOpacity style={styles.sendButton}>
                             <Send />

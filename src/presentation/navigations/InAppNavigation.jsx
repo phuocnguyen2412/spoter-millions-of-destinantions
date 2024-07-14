@@ -18,6 +18,7 @@ import ChallengeIcon from "../../assets/img/Button/challenge.svg";
 import ProfileIcon from "../../assets/img/Button/profile.svg";
 import { View } from "react-native";
 import { Camera } from "../../assets/img/Button";
+import ChallengeNavigation from "./ChallengeNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -50,7 +51,7 @@ const TabArr = [
         route: "challenge",
         label: "Challenge",
         icon: ChallengeIcon,
-        component: Challenge,
+        component: ChallengeNavigation,
         tabBarColor: color.yellow,
         badge: true,
     },

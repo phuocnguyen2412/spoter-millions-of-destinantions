@@ -18,13 +18,13 @@ const NewFeedStack = () => {
                     // Hide tab bar on this screen
                 })}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
                 name="map"
                 component={MapScreen}
                 screenOptions={{
                     fotterShown: false,
                 }}
-            />
+            /> */}
             <Stack.Screen
                 name="notification"
                 component={NotificationScreen}

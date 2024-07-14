@@ -6,7 +6,7 @@ import { StyleSheet, View } from "react-native";
 import AuthNavgation from "./AuthNavigation";
 import InAppNavigation from "./InAppNavigation";
 import { SafeAreaFrameContext } from "react-native-safe-area-context";
-import { useSafeArea } from "native-base";
+
 
 const Stack = createStackNavigator();
 

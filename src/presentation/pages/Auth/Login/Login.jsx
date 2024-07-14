@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Image } from "react-native";
-import { FontAwesome, AntDesign, Ionicons } from "@expo/vector-icons";
-import { Button, Heading, Input, Stack, Text } from "native-base";
+import { View, StyleSheet, Image, Button, Text } from "react-native";
+
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styleLogin";
 import authService from "../../../../services/auth.service";
@@ -49,7 +48,6 @@ const LoginScreen = () => {
 
             await setDataStorage("account", response.data);
             navigation.replace("in-app", { screen: "NewFeedScreen" });
-            
         } catch (error) {
             console.log(error);
         } finally {
@@ -92,9 +90,8 @@ const LoginScreen = () => {
                         className="mb-7 w-full rounded-xl py-5 text-center text-neutral-700 text-base font-medium font-['Montserrat'] leading-[18px]"
                         isLoading={isLoading}
                         onPress={handleLogin}
-                    >
-                        Continue
-                    </Button>
+                        title="Continue"
+                    />
                 </View>
                 <View className="w-[294px] h-[0px] border border-neutral-500 mx-auto"></View>
                 <View className="mb-3 relative bottom-3 bg-white inline">

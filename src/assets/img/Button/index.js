@@ -1,5 +1,5 @@
 import AddPhoto from "./add-photo.svg";
-import Back from "./Back.svg";
+import Back from "./back.svg";
 import Camera from "./camera.svg";
 import Flash from "./flash.svg";
 import KinhLup from "./kinhlup.svg";
@@ -16,10 +16,7 @@ import RotateCamera from "./rotate-camera.svg";
 import Unchecked from "./unchecked.svg";
 import TakingPhoto from "./taking-photo.svg";
 import Send from "./send-textbox.svg";
-import Smile from "./smile-textbox.svg";
-import Sticker from "./sticker-textbox.svg";
-import Gif from "./gif-textbox.svg";
-import CameraTextBox from "./camera-textbox.svg";
+
 import Comment from "./comment.svg";
 import HeartActive from "./heart-active.svg";
 import Save from "./save.svg";
@@ -29,7 +26,23 @@ import Facebook from "./Facebook.svg";
 import Google from "./Google.svg";
 import Apple from "./Apple.svg";
 import WhatsApp from "./WhatsApp.svg";
+import Pin from "./pin.svg";
+import Coin from "./coin.svg";
+import Process from "./process.svg";
+import Wallet from "./wallet.svg";
+import BackRightToLeft from "./back-right-to-left.svg";
+import BackLeftToRight from "./back-left-to-right.svg";
+import PinChallenge from "./pin-challenge.svg";
+import Calender from "./calender.svg";
 export {
+    PinChallenge,
+    Calender,
+    BackLeftToRight,
+    BackRightToLeft,
+    Pin,
+    Coin,
+    Process,
+    Wallet,
     Facebook,
     Google,
     Apple,
@@ -40,10 +53,6 @@ export {
     Save,
     Navigation,
     Send,
-    Smile,
-    Sticker,
-    CameraTextBox,
-    Gif,
     TakingPhoto,
     AddPhoto,
     Back,

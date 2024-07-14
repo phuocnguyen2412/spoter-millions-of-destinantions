@@ -1,4 +1,4 @@
-import { Input } from "native-base";
+
 import React, { useState } from "react";
 import { View, Text, Button, Image } from "react-native";
 import authService from "../../../../services/auth.service";

@@ -9,10 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { PostCard } from "../../../components/PostCard";
-import color from "../../../contants/color";
-import { Image } from "expo-image";
-import NewFeedLogo from "../../../../assets/img/Button/new-posts-logo.svg";
-import SvgIcon from "../../../components/SvgIcon";
+
 import { NewPostLogo } from "../../../../assets/img/Button";
 import { FlashList } from "@shopify/flash-list";
 import { useNavigation } from "@react-navigation/native";

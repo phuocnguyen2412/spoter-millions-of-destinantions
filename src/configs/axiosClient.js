@@ -3,7 +3,7 @@ import { API_URL } from "@env";
 import { getDataFromStorage } from "../helpers/storage";
 
 const axiosClient = axios.create({
-    baseURL: API_URL, 
+    baseURL: API_URL,
     headers: {
         "content-type": "application/json",
     },
@@ -11,6 +11,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
     async (config) => {
+        console.log(config);
         const accessToken = await getDataFromStorage("account");
         if (accessToken && accessToken.accessToken) {
             config.headers["Authorization"] =
