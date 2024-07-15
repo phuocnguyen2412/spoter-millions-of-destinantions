@@ -1,4 +1,8 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import {
+    useIsFocused,
+    useNavigation,
+    useRoute,
+} from "@react-navigation/native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { Image } from "expo-image";
 import React, { useEffect, useRef, useState } from "react";
@@ -13,9 +17,13 @@ import {
 } from "../../../../assets/img/Button";
 
 const Camera = () => {
+    const data = useRoute().params?.images || [];
+    console.log(data);
     const [facing, setFacing] = useState("back");
+    const [flash, setFlash] = useState(false);
     const [permission, requestPermission] = useCameraPermissions();
-    const [images, setImage] = useState([]);
+    const [images, setImages] = useState(data);
+
     const imageRef = useRef(null);
     const navigation = useNavigation();
     const isFocused = useIsFocused();
@@ -53,17 +61,23 @@ const Camera = () => {
     const textPicture = async () => {
         if (imageRef) {
             try {
-                const image = await imageRef.current.takePictureAsync();
-                setImage([...images, ...image]);
+                const photo = await imageRef.current.takePictureAsync();
+                setImages((current) => [...current, photo]);
+                navigation.navigate("create-post", {
+                    images: [...images, photo],
+                });
             } catch (e) {
                 console.error(e);
             }
         }
     };
-
+    const toggleFlash = () => {
+        setFlash(!flash);
+    };
     return (
         <View style={styles.container}>
             <CameraView
+                flash={flash}
                 cameraRatio="1:1"
                 style={styles.camera}
                 facing={facing}
@@ -72,7 +86,10 @@ const Camera = () => {
             >
                 <View className="flex-row bg-white">
                     <TouchableOpacity
-                        onPress={() => navigation.goBack()}
+                        onPress={() => {
+                            array.splice(0, array.length);
+                            navigation.goBack();
+                        }}
                         className="flex-row"
                     >
                         <Delete />
@@ -80,7 +97,7 @@ const Camera = () => {
                 </View>
                 <View className="h-[150] w-full bg-white">
                     <View className="flex-row justify-between items-center w-full py-6 px-10">
-                        <TouchableOpacity onPress={toggleCameraFacing}>
+                        <TouchableOpacity onPress={toggleFlash}>
                             <Flash />
                         </TouchableOpacity>
                         <TouchableOpacity

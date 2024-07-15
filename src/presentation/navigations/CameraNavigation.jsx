@@ -6,7 +6,7 @@ import Camera from "../pages/InApp/Camera/Camera";
 import CreatePostScreen from "../pages/InApp/Camera/CreatePostScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 
 const CameraNavigation = () => {
     return (
@@ -14,13 +14,7 @@ const CameraNavigation = () => {
             <Stack.Screen
                 name="take-photo"
                 component={Camera}
-                options={{
-                    presentation: "formSheet",
-                    sheetAllowedDetents: 'all',
-                    sheetCornerRadius: 30,
-                    sheetGrabberVisible: true,
-                    
-                }}
+                initialParams={{ images: [] }}
             />
             <Stack.Screen
                 screenOptions={{
@@ -28,6 +22,12 @@ const CameraNavigation = () => {
                 }}
                 name="create-post"
                 component={CreatePostScreen}
+                options={{
+                    presentation: "formSheet",
+                    sheetAllowedDetents: "all",
+                    sheetCornerRadius: 30,
+                    sheetGrabberVisible: true,
+                }}
             />
         </Stack.Navigator>
     );

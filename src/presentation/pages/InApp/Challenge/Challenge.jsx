@@ -65,13 +65,9 @@ const Challenge = () => {
                                 Missions
                             </Text>
                         </View>
-
-                        <FlatList
-                            data={missions}
-                            renderItem={({ item }) => (
-                                <MissionComponent info={item} />
-                            )}
-                        />
+                        {missions.map((mission, index) => (
+                            <MissionComponent key={index} info={mission} />
+                        ))}
                     </View>
                 </View>
             </ScrollView>

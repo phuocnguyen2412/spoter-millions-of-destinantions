@@ -36,7 +36,7 @@ const Form = ({ title, description, setChecked, checked }) => {
         </View>
     );
 };
-const Accordion = () => {
+const Accordion = ({ images }) => {
     const navigation = useNavigation();
     const [expanded, setExpanded] = useState(false);
     const [animation, setAnimation] = useState(new Animated.Value(1));
@@ -80,7 +80,9 @@ const Accordion = () => {
                 <View className="flex-row gap-6 justify-between ">
                     <CropPhoto />
                     <AddPhoto
-                        onPress={() => navigation.navigate("take-photo")}
+                        onPress={() =>
+                            navigation.navigate("take-photo", { images })
+                        }
                     />
                 </View>
                 <Ionicons

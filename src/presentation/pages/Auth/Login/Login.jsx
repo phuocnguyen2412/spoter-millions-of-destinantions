@@ -91,6 +91,7 @@ const LoginScreen = () => {
                         isLoading={isLoading}
                         onPress={handleLogin}
                         title="Continue"
+                        disabled={isLoading}
                     />
                 </View>
                 <View className="w-[294px] h-[0px] border border-neutral-500 mx-auto"></View>

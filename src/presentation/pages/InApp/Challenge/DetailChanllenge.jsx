@@ -9,19 +9,24 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { Calender, PinChallenge } from "../../../../assets/img/Button";
+import {
+    Calender,
+    CalenderGray,
+    PinChallenge,
+} from "../../../../assets/img/Button";
+import missions from "../../../../data/missions";
 
 const DetailChanllenge = () => {
     const { title, image, time, position, host, hostImage, description } =
         useRoute().params.info;
     return (
         <ScrollView className="flex-1  bg-white">
-            <View className="rounded-bl-[15px] rounded-br-[15px] overflow-hidden mb-[25.3]">
-                <Image source={image} className="w-full h-[200] " />
+            <View className="rounded-bl-[20px] rounded-br-[20px] overflow-hidden mb-[25.3]">
+                <Image source={image} className="w-full h-[250] " />
             </View>
             <View className="px-6">
                 <View className="mb-[30]">
-                    <Text className="text-neutral-800 text-[26px] font-semibold font-['Montserrat'] leading-[30px] tracking-wide">
+                    <Text className="text-neutral-800 text-[26px] font-semibold font-['Montserrat']  tracking-wide">
                         {title}
                     </Text>
                 </View>
@@ -55,18 +60,47 @@ const DetailChanllenge = () => {
                     />
                 </View>
 
-                <View>
+                <View className="mb-[60]">
                     <Text className="text-neutral-800 text-xl font-normal  leading-tight">
                         About event
                     </Text>
                     <Text>{description}</Text>
                 </View>
+                <FlashList
+                    numColumns={2}
+                    data={missions}
+                    renderItem={({ item }) => (
+                        <MissionSmallComponent info={item} />
+                    )}
+                    estimatedItemSize={200}
+                />
             </View>
         </ScrollView>
     );
 };
+const MissionSmallComponent = ({ info }) => {
+    const { image, title, time } = info;
+    return (
+        <View className="p-[6] bg-white rounded-[15px] shadow overflow-hidden">
+            <View className="w-full h-[115px] overflow-hidden mb-2">
+                <Image
+                    source={image}
+                    className="w-full h-full rounded-[15px]"
+                />
+            </View>
+            <Text className="text-black text-xs font-medium font-['Montserrat'] mb-2">
+                {title}
+            </Text>
+            <View className="flex-row items-center">
+                <CalenderGray className="mr-[5]" />
+                <Text className="text-neutral-400 text-[10px] font-medium font-['Montserrat']">
+                    {time}
+                </Text>
+            </View>
+        </View>
+    );
+};
 const Info = ({ icon, title, description, prefix }) => {
-    console.log(icon);
     return (
         <View className="flex-row mb-[25] items-center justify-between">
             <View className="flex-row items-center flex-1">

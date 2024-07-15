@@ -2,16 +2,14 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 const UserInfo = ({
-    userImage = {
-        uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY-hjuFaNMnEAp28Q9Mo7x6QK_IyHnKdOqqA&s",
-    },
+    userImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY-hjuFaNMnEAp28Q9Mo7x6QK_IyHnKdOqqA&s",
+
     postTime,
     userName,
     textDark = false,
     disableAdd = false,
     style,
 }) => {
-  
     const styles = StyleSheet.create({
         userImage: {
             width: 40,
@@ -40,7 +38,7 @@ const UserInfo = ({
     });
     return (
         <View className="relative flex-row" style={style}>
-            <Image source={userImage} style={styles.userImage} />
+            <Image source={{ uri: userImage }} style={styles.userImage} />
             {!disableAdd && (
                 <Image
                     source={require("../../assets/img/follow-icon.png")}

@@ -34,7 +34,9 @@ import BackRightToLeft from "./back-right-to-left.svg";
 import BackLeftToRight from "./back-left-to-right.svg";
 import PinChallenge from "./pin-challenge.svg";
 import Calender from "./calender.svg";
+import CalenderGray from "./calender-gray.svg";
 export {
+    CalenderGray,
     PinChallenge,
     Calender,
     BackLeftToRight,

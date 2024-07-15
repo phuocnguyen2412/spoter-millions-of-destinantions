@@ -78,7 +78,7 @@ const DetailPostScreen = ({ route }) => {
                             <UserInfo
                                 style={{ marginLeft: 16 }}
                                 textDark={true}
-                                userImage={{ uri: userImage.uri }}
+                                userImage={userImage}
                                 userName={userName}
                                 postTime={postTime}
                             />
@@ -96,7 +96,7 @@ const DetailPostScreen = ({ route }) => {
                         {caption}
                     </Text>
                     <Image
-                        source={postImage}
+                        source={{ uri: postImage }}
                         style={styles.image}
                         resizeMode="cover"
                     />

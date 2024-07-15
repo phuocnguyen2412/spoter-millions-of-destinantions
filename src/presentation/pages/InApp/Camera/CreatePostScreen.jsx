@@ -20,7 +20,8 @@ import userService from "../../../../services/user.service";
 
 const CreatePostScreen = () => {
     const route = useRoute();
-    const image = route.params.image;
+    const images = route.params.images;
+
     const [caption, setCaption] = useState("");
     const [user, setUser] = useState({});
     const navigation = useNavigation();
@@ -97,13 +98,13 @@ const CreatePostScreen = () => {
                         />
                         <View className="w-full h-[400]">
                             <Image
-                                source={image.uri}
+                                source={images[0].uri}
                                 className="w-full h-[400]"
                             />
                         </View>
                     </View>
 
-                    <Accordion />
+                    <Accordion images={images} />
                 </View>
             </ScrollView>
         </View>
