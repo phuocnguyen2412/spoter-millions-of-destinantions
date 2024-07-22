@@ -1,19 +1,16 @@
 import {
-    useIsFocused,
     useNavigation,
-    useRoute,
+    useRoute
 } from "@react-navigation/native";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import { Image } from "expo-image";
-import React, { useEffect, useRef, useState } from "react";
-import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
-import { Text } from "react-native";
-import { Entypo } from "@expo/vector-icons";
+import React, { useRef, useState } from "react";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
+import { CloseSquare, FlashCircle } from "iconsax-react-native";
 import {
-    Delete,
     Flash,
     RotateCamera,
-    TakingPhoto,
+    TakingPhoto
 } from "../../../../assets/img/Button";
 
 const Camera = () => {
@@ -26,18 +23,6 @@ const Camera = () => {
 
     const imageRef = useRef(null);
     const navigation = useNavigation();
-    const isFocused = useIsFocused();
-    useEffect(() => {
-        if (isFocused) {
-            navigation.getParent().setOptions({
-                tabBarStyle: { display: "none" },
-            });
-        } else {
-            navigation.getParent().setOptions({
-                tabBarStyle: { display: "flex" },
-            });
-        }
-    }, [isFocused]);
     if (!permission) {
         // Camera permissions are still loading.
         return <View />;
@@ -75,27 +60,33 @@ const Camera = () => {
         setFlash(!flash);
     };
     return (
-        <View style={styles.container}>
-            <CameraView
-                flash={flash}
-                cameraRatio="1:1"
-                style={styles.camera}
-                facing={facing}
-                className="flex-column justify-between"
-                ref={imageRef}
-            >
-                <View className="flex-row bg-white">
-                    <TouchableOpacity
-                        onPress={() => {
-                            array.splice(0, array.length);
-                            navigation.goBack();
-                        }}
-                        className="flex-row"
-                    >
-                        <Delete />
-                    </TouchableOpacity>
+        <View className="flex-1 pt-9 bg-black">
+            <View className="flex-row bg-black justify-between items-center py-4 px-6">
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.goBack();
+                    }}
+                    className="flex-row"
+                >
+                    <CloseSquare color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={toggleCameraFacing}>
+                    <FlashCircle color="white" />
+                </TouchableOpacity>
+            </View>
+            <View className="flex-1 justify-center">
+                <View className="flex-1 bg-slate-600 p-5">
+                    <CameraView
+                        flash={flash}
+                        cameraRatio="1:1"
+                        style={styles.camera}
+                        facing={facing}
+                        className="flex-column justify-between"
+                        ref={imageRef}
+                    ></CameraView>
                 </View>
-                <View className="h-[150] w-full bg-white">
+
+                <View className="bg-white">
                     <View className="flex-row justify-between items-center w-full py-6 px-10">
                         <TouchableOpacity onPress={toggleFlash}>
                             <Flash />
@@ -112,7 +103,7 @@ const Camera = () => {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </CameraView>
+            </View>
         </View>
     );
 };

@@ -12,8 +12,11 @@ const MissionComponent = ({ info }) => {
             className="bg-neutral-50 rounded-[15px] shadow border border-neutral-300 p-[11] flex-row mb-[15] relative"
             onPress={() => navigation.navigate("detail-challenge", { info })}
         >
-            <View className="rounded-[10px] shadow h-[80] w-[80] overflow-hidden mr-[20]">
-                <Image source={image} className="w-full h-full" />
+            <View className="shadow h-[80] w-[80]  mr-[20]">
+                <Image
+                    source={image}
+                    className="w-full h-full rounded-[10px]"
+                />
             </View>
             <View className="flex-1">
                 <View className="mb-2">
@@ -37,9 +40,9 @@ const MissionComponent = ({ info }) => {
             </View>
             <ImageBackground
                 source={require("../../assets/img/process.jpg")}
-                className="flex-row items-center justify-between w-[30] h-[30] absolute bottom-3 right-3 inline-flex"
+                className="flex-row items-center justify-center w-[30] h-[30] absolute bottom-2 right-2"
             >
-                <Text className="text-sky-800 text-[10px] font-normal font-['Montserrat'] ">
+                <Text className="text-sky-800 text-[8px] font-normal font-['Montserrat']">
                     {process}%
                 </Text>
             </ImageBackground>

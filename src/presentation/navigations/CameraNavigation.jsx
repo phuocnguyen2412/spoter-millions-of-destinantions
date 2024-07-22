@@ -1,16 +1,21 @@
 import React from "react";
 
-import NewFeed from "../pages/InApp/NewFeed/NewFeed";
-import DetailPostScreen from "../pages/InApp/DetailPostScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Camera from "../pages/InApp/Camera/Camera";
 import CreatePostScreen from "../pages/InApp/Camera/CreatePostScreen";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
 const CameraNavigation = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+                tabBarStyle: {
+                    display: "none",
+                },
+            }}
+        >
             <Stack.Screen
                 name="take-photo"
                 component={Camera}
@@ -24,7 +29,7 @@ const CameraNavigation = () => {
                 component={CreatePostScreen}
                 options={{
                     presentation: "formSheet",
-                    sheetAllowedDetents: "all",
+                    sheetAllowedDetents: "large",
                     sheetCornerRadius: 30,
                     sheetGrabberVisible: true,
                 }}

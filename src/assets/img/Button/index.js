@@ -35,7 +35,55 @@ import BackLeftToRight from "./back-left-to-right.svg";
 import PinChallenge from "./pin-challenge.svg";
 import Calender from "./calender.svg";
 import CalenderGray from "./calender-gray.svg";
+import Microphone from "./microphone.svg";
+import PinMap from "./pin-map.svg";
+import Star from "./star.svg";
+import Line from "./line.svg";
+import Distance from "./distance.svg";
+import ArrowDown from "./arrow-down.svg";
+import ArrowRightToLeft from "./arrow-right-to-left.svg";
+import PinFilter from "./pin-filter.svg";
+import Share from "./share.svg";
+import Follow from "./follow.svg";
+import LineProfile from "./line-profile.svg";
+import SmileTextBox from "./smile-textbox.svg";
+import GifTextBox from "./gif-textbox.svg";
+import CameraTextBox from "./camera-textbox.svg";
+import StickerTextBox from "./sticker-textbox.svg";
+import PersonReview from "./person-review.svg";
+import Clock from "./clock.svg";
+import Mark from "./mark.svg";
+import Info from "./info.svg";
+import Add from "./add.svg";
+import SaveFullFill from "./save-fullfill.svg";
+import Hotel from "./hotel.svg";
+import Coffee from "./coffee.svg";
+import Building from "./building.svg";
 export {
+    Hotel,
+    Coffee,
+    Building,
+    SaveFullFill,
+    Add,
+    Clock,
+    Mark,
+    Info,
+    PersonReview,
+    SmileTextBox,
+    GifTextBox,
+    CameraTextBox,
+    StickerTextBox,
+    LineProfile,
+    Share,
+    Follow,
+    PinFilter,
+    ArrowRightToLeft,
+    Line,
+    Distance,
+    ArrowDown,
+    Star,
+    Microphone,
+    PinMap,
     CalenderGray,
     PinChallenge,
     Calender,

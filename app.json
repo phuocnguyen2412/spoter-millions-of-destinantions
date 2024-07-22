@@ -30,6 +30,10 @@
                 "projectId": "1cde4886-170c-473c-a79e-6c4bd5e6f726"
             }
         },
+        "packagerOpts": {
+            "sourceExts": ["js", "jsx", "svgx"],
+            "transformer": "node_modules/react-native-svg-transformer/index.js"
+        },
         "plugins": [
             [
                 "expo-camera",

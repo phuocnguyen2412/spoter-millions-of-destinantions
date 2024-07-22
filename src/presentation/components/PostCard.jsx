@@ -1,23 +1,25 @@
-import { View, Text, StyleSheet, Image, ImageBackground } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; // Thư viện icons
+import { ImageBackground, Text, View } from "react-native";
 
-import { useState, useEffect } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import UserInfo from "./UserInfo";
+import { useEffect, useState } from "react";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { getColors } from "react-native-image-colors";
+import UserInfo from "./UserInfo";
 
-import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
+import { hexToRgba } from "../../helpers/hexToRgba";
+import { Pin } from "../../assets/img/Button";
 export const PostCard = ({ post }) => {
     const {
         userImage,
-        userName,
-        postTime,
-        postImage,
-        likes,
-        comments,
-        caption,
+        userName = "Thao Nguyen",
+        createdAt,
+        images,
+        likes = Math.floor(Math.random() * 100),
+        comments = Math.floor(Math.random() * 100),
+        description,
     } = post;
 
     const [liked, setLiked] = useState(false);
@@ -31,10 +33,10 @@ export const PostCard = ({ post }) => {
     useEffect(() => {
         (async () => {
             try {
-                const color = await getColors(postImage, {
+                const color = await getColors(images[0], {
                     fallback: "#fff",
                     cache: true,
-                    key: postImage,
+                    key: images[0],
                     quality: "highest",
                 });
                 setColors(color);
@@ -42,29 +44,36 @@ export const PostCard = ({ post }) => {
                 console.error(error);
             }
         })();
-    }, [postImage]);
-    console.log(colors);
+    }, [images]);
+
     const navigation = useNavigation();
 
     const toggleLike = () => {
         setLikeNumber((cur) => (liked ? cur - 1 : cur + 1));
         setLiked((cur) => !cur);
     };
+
     return (
         <View className={` mb-5 rounded-3xl overflow-hidden`}>
             <LinearGradient
-                colors={[`${colors.dominant}/40`, `${colors.vibrant}/40`]}
+                dither={true}
+                start={{ x: 0, y: 1 }}
+                colors={[
+                    hexToRgba(colors.primary, 0.25),
+                    hexToRgba(colors.detail, 0.25),
+                ]}
             >
                 <ImageBackground
-                    source={{ uri: postImage }}
-                    className="h-[375] overflow-hidden p-[14] flex-col justify-between"
+                    source={{ uri: images[0] }}
+                    className="h-[375] p-[14] flex-col justify-between shadow"
                     imageStyle={{ borderRadius: 24 }}
+                    resizeMode="cover"
                 >
                     <View className="flex-row justify-between">
                         <UserInfo
                             userImage={userImage}
                             userName={userName}
-                            postTime={postTime}
+                            postTime={createdAt}
                         />
 
                         <Ionicons
@@ -110,7 +119,13 @@ export const PostCard = ({ post }) => {
                                     />
                                 }
                             />
+
                             <Button
+                                onPress={() =>
+                                    navigation.navigate("save", {
+                                        postImage: images[0],
+                                    })
+                                }
                                 icon={
                                     <Ionicons
                                         name="bookmark-outline"
@@ -124,12 +139,18 @@ export const PostCard = ({ post }) => {
                 </ImageBackground>
 
                 <TouchableOpacity
-                    className={`p-6`}
+                    className={`px-6 pt-4 pb-[10]`}
                     onPress={() => navigation.navigate("detail-post", { post })}
                 >
-                    <Text className="text-black text-[13px] font-normal font-['Montserrat']">
-                        {caption}
+                    <Text className="text-black text-[14px] font-normal font-['Montserrat']">
+                        {description}
                     </Text>
+                    <View className="flex-row items-center justify-end">
+                        <Pin className="mr-[5]" />
+                        <Text className=" text-neutral-600 text-[10px] font-normal font-['Montserrat']">
+                            Los Angeles, CA
+                        </Text>
+                    </View>
                 </TouchableOpacity>
             </LinearGradient>
         </View>

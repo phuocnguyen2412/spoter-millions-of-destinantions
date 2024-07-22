@@ -5,4 +5,8 @@ module.exports = {
     },
     assets: [".src/assets/fonts/"],
     dependencies: {},
+    compilerOptions: {
+        jsx: "react",
+        baseUrl: "./src/js",
+    },
 };

@@ -1,24 +1,24 @@
-import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import SvgIcon from "../components/SvgIcon";
+import React from "react";
 
-import Suggest from "../pages/InApp/Suggest/Suggest";
 import Profile from "../pages/InApp/Profile/Profile";
 
-import Challenge from "../pages/InApp/Challenge/Challenge";
-import FeedNavigation from "./FeedNavigation";
-import CameraNavigation from "./CameraNavigation";
 import color from "../contants/color";
+import CameraNavigation from "./CameraNavigation";
+import FeedNavigation from "./FeedNavigation";
 
 // Import SVG icons
-import NewFeedIcon from "../../assets/img/Button/new-feed.svg";
-import SuggestIcon from "../../assets/img/Button/kinhlup.svg";
-import CameraIcon from "../../assets/img/Button/camera.svg";
-import ChallengeIcon from "../../assets/img/Button/challenge.svg";
-import ProfileIcon from "../../assets/img/Button/profile.svg";
 import { View } from "react-native";
 import { Camera } from "../../assets/img/Button";
+import CameraIcon from "../../assets/img/Button/camera.svg";
+import ChallengeIcon from "../../assets/img/Button/challenge.svg";
+import SuggestIcon from "../../assets/img/Button/kinhlup.svg";
+import NewFeedIcon from "../../assets/img/Button/new-feed.svg";
+import ProfileIcon from "../../assets/img/Button/profile.svg";
+import { UserContext } from "../../context/user";
+import userService from "../../services/user.service";
 import ChallengeNavigation from "./ChallengeNavigation";
+import SuggestNavigation from "./SuggestNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,15 +28,15 @@ const TabArr = [
         label: "New Feed",
         icon: NewFeedIcon,
         component: FeedNavigation,
-        tabBarColor: color.primary,
+
         badge: false,
     },
     {
         route: "suggest",
         label: "Suggest",
         icon: SuggestIcon,
-        component: Suggest,
-        tabBarColor: color.green,
+        component: SuggestNavigation,
+
         badge: false,
     },
     {
@@ -44,7 +44,7 @@ const TabArr = [
         label: "Camera",
         icon: CameraIcon,
         component: CameraNavigation,
-        tabBarColor: color.red,
+
         badge: false,
     },
     {
@@ -52,7 +52,7 @@ const TabArr = [
         label: "Challenge",
         icon: ChallengeIcon,
         component: ChallengeNavigation,
-        tabBarColor: color.yellow,
+
         badge: true,
     },
     {
@@ -60,12 +60,18 @@ const TabArr = [
         label: "Profile",
         icon: ProfileIcon,
         component: Profile,
-        tabBarColor: color.purple,
-        badge: true,
     },
 ];
 
 const InAppNavigation = () => {
+    const { updateUser } = React.useContext(UserContext);
+    const getUserInfo = async () => {
+        const data = await userService.getMyInfo();
+        updateUser(data.data);
+    };
+    React.useEffect(() => {
+        getUserInfo();
+    }, []);
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -86,26 +92,16 @@ const InAppNavigation = () => {
                 tabBarActiveTintColor: color.primary,
                 tabBarInactiveTintColor: "white",
                 tabBarStyle: {
-                    paddingVertical: "10px",
-                    display: "flex",
+                    flexDirection: "row",
                     alignItems: "center",
-                    backgroundColor: "white",
-                    borderTopWidth: 0.5,
-                    borderColor: color.gray,
-
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 2,
-                    },
-                    shadowOpacity: 0.25,
-                    shadowRadius: 3.84,
-                    elevation: 5,
                 },
             })}
         >
             {TabArr.map((tab, index) => (
                 <Tab.Screen
+                    screenOptions={{
+                        headerShown: false,
+                    }}
                     key={index}
                     name={tab.route}
                     component={tab.component}

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
@@ -25,6 +26,7 @@ const UserInfo = ({
             textShadowRadius: !textDark ? 4 : undefined,
         },
         postTime: {
+            letterSpacing: 0.5,
             color: textDark ? "black" : "white",
             textShadowColor: !textDark ? "rgba(0, 0, 0, 0.60)" : undefined,
             textShadowOffset: !textDark ? { width: 0, height: 2 } : undefined,
@@ -45,18 +47,18 @@ const UserInfo = ({
                     style={styles.follow}
                 />
             )}
-            <View className="ml-2">
+            <View>
                 <Text
                     style={styles.userName}
-                    className="text-sm font-medium font-['Montserrat'] leading-none tracking-tight mb-[2]"
+                    className="text-sm font-medium font-['Montserrat'] leading-none tracking-tight mb-1"
                 >
                     {userName}
                 </Text>
                 <Text
                     style={styles.postTime}
-                    className="text-[11px] font-light font-['Montserrat'] leading-3"
+                    className="text-[11px] font-['Montserrat']"
                 >
-                    {postTime}
+                    {dayjs(postTime).format("DD/MM/YYYY")}
                 </Text>
             </View>
         </View>

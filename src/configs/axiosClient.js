@@ -3,7 +3,7 @@ import { API_URL } from "@env";
 import { getDataFromStorage } from "../helpers/storage";
 
 const axiosClient = axios.create({
-    baseURL: API_URL,
+    baseURL: "http://localhost:3000/api/v1",
     headers: {
         "content-type": "application/json",
     },
@@ -11,7 +11,6 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
     async (config) => {
-        console.log(config);
         const accessToken = await getDataFromStorage("account");
         if (accessToken && accessToken.accessToken) {
             config.headers["Authorization"] =
@@ -33,6 +32,7 @@ axiosClient.interceptors.response.use(
         return response;
     },
     (error) => {
+        console.log(error);
         if (error.response) {
             console.error("API error:", error.response.data);
             throw error.response.data;

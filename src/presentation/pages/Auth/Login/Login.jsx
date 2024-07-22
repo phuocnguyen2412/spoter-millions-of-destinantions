@@ -1,45 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Image, Button, Text } from "react-native";
+import React, { useContext, useState } from "react";
+import { Image, Text, View } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
-import styles from "./styleLogin";
-import authService from "../../../../services/auth.service";
-import InputComponent from "../../../components/InputComponent";
+
 import { Lock, User } from "iconsax-react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import {
     Apple,
     Facebook,
     Google,
     WhatsApp,
 } from "../../../../assets/img/Button";
-import {
-    getDataFromStorage,
-    setDataStorage,
-} from "../../../../helpers/storage";
+import { UserContext } from "../../../../context/user";
+import { setDataStorage } from "../../../../helpers/storage";
+import authService from "../../../../services/auth.service";
+import InputComponent from "../../../components/InputComponent";
+import color from "../../../contants/color";
 
 const LoginScreen = () => {
     const [show, setShow] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setUserInfo] = useState({});
     const navigation = useNavigation();
-    useEffect(() => {
-        const handleLogin = async () => {
-            try {
-                const token = await getDataFromStorage("account");
-                console.log(token);
-                const res = await authService.refreshToken(token.accessToken);
-                await setDataStorage("account", res.data);
-                navigation.replace("in-app", { screen: "NewFeedScreen" });
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        handleLogin();
-    }, []);
+    const { updateUser } = useContext(UserContext);
 
     const handleLogin = async () => {
         try {
-            console.log(userInfo);
             setIsLoading(true);
             const response = await authService.login(
                 userInfo.username.toLowerCase(),
@@ -57,9 +43,10 @@ const LoginScreen = () => {
 
     return (
         <View className="flex-1" style={{ backgroundColor: color.white }}>
-            <View className="flex-row justify-center my-10">
+            <View className="flex-row justify-center mt-[100] w-full">
                 <Image
-                    source={require("../../../../assets/img/logo-small.jpg")}
+                    source={require("../../../../assets/img/logo-with-text.png")}
+                    className="w-full h-[200]"
                 />
             </View>
 
@@ -73,7 +60,7 @@ const LoginScreen = () => {
                         onChangeText={(e) =>
                             setUserInfo({ ...userInfo, username: e })
                         }
-                        placeholder="User name"
+                        placeholder="user name"
                         affix={<User size={22} color="gray" />}
                     />
                     <InputComponent
@@ -83,21 +70,22 @@ const LoginScreen = () => {
                             setUserInfo({ ...userInfo, password: e })
                         }
                         affix={<Lock size={22} color="gray" />}
-                        placeholder="*********"
+                        placeholder="your password"
                     />
-                    <Button
-                        style={{ backgroundColor: color.primary }}
-                        className="mb-7 w-full rounded-xl py-5 text-center text-neutral-700 text-base font-medium font-['Montserrat'] leading-[18px]"
-                        isLoading={isLoading}
+                    <TouchableOpacity
                         onPress={handleLogin}
-                        title="Continue"
-                        disabled={isLoading}
-                    />
+                        style={{ backgroundColor: color.primary }}
+                        className="mb-7 w-full rounded-xl py-5 "
+                    >
+                        <Text className="text-center text-white text-base font-medium font-['Montserrat']">
+                            Sign in
+                        </Text>
+                    </TouchableOpacity>
                 </View>
                 <View className="w-[294px] h-[0px] border border-neutral-500 mx-auto"></View>
                 <View className="mb-3 relative bottom-3 bg-white inline">
                     <Text className=" text-center text-neutral-500 text-sm font-medium font-['Montserrat'] leading-none inline">
-                        or Log in with
+                        or log in with
                     </Text>
                 </View>
 

@@ -4,6 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AppNavigation from "./src/presentation/navigations/AppNavigation";
 
 import * as Font from "expo-font";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { UserProvider } from "./src/context/user";
 SplashScreen.preventAutoHideAsync();
 export default function App() {
     const [loaded, error] = Font.useFonts({
@@ -37,13 +39,10 @@ export default function App() {
         return null;
     }
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            {/* <InAppNavigation /> */}
-            {/* <NavigationContainer>
-                
-                    
-                </NavigationContainer> */}
-            <AppNavigation />
-        </SafeAreaView>
+        <GestureHandlerRootView className="flex-1">
+            <UserProvider>
+                <AppNavigation />
+            </UserProvider>
+        </GestureHandlerRootView>
     );
 }

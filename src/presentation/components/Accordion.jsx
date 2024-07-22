@@ -1,22 +1,22 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
-    View,
-    Text,
-    TouchableOpacity,
-    StyleSheet,
     Animated,
     Easing,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { Image } from "expo-image";
 import {
     AddPhoto,
     Checked,
     CropPhoto,
     Unchecked,
 } from "../../assets/img/Button";
-import { useNavigation } from "@react-navigation/native";
-const Form = ({ title, description, setChecked, checked }) => {
+import Rating from "./Rating";
+const Form = ({ title, description, icon }) => {
     return (
         <View className=" rounded-tr-[15px] shadow mb-3 px-[38] ">
             <View className="w-full h-[0px] border border-neutral-200 mb-[10]"></View>
@@ -29,9 +29,7 @@ const Form = ({ title, description, setChecked, checked }) => {
                         {description}
                     </Text>
                 </View>
-                <TouchableOpacity onPress={setChecked}>
-                    {checked ? <Checked /> : <Unchecked />}
-                </TouchableOpacity>
+                {icon}
             </View>
         </View>
     );
@@ -58,32 +56,18 @@ const Accordion = ({ images }) => {
     });
 
     return (
-        <View className="w-full bg-stone-100 rounded-tl-[15px] rounded-tr-[15px] shadow">
-            <Animated.View style={[{ height }]}>
-                <View>
-                    <Form
-                        title="Pin on Map"
-                        description="Enabling pin will allow everybody can see"
-                        checked={true}
-                    />
-                    <Form
-                        checked={false}
-                        title="Comment"
-                        description="You allow people to comment your post"
-                    />
-                </View>
-            </Animated.View>
+        <View className="w-full bg-[#F5F5F4] rounded-tl-[15px] rounded-tr-[15px] shadow overflow-hidden">
             <TouchableOpacity
                 onPress={toggleAccordion}
                 className="flex-row  justify-between bg-stone-100 px-[38] py-3 rounded-tl-[15px] rounded-tr-[15px] "
             >
                 <View className="flex-row gap-6 justify-between ">
-                    <CropPhoto />
                     <AddPhoto
                         onPress={() =>
                             navigation.navigate("take-photo", { images })
                         }
                     />
+                    <CropPhoto />
                 </View>
                 <Ionicons
                     name={expanded ? "chevron-down" : "chevron-up"}
@@ -91,6 +75,27 @@ const Accordion = ({ images }) => {
                     className="text-stone-100"
                 />
             </TouchableOpacity>
+            <Animated.View style={[{ height }]}>
+                <View>
+                    <Form
+                        title="Pin on Map"
+                        description="Enabling pin will allow everybody can see"
+                        icon={<Checked />}
+                    />
+                    <Form
+                        checked={false}
+                        title="Comment"
+                        description="You allow people to comment your post"
+                        icon={<Unchecked />}
+                    />
+                    <Form
+                        checked={false}
+                        title="Evaluate"
+                        description="Rate this place"
+                        icon={<Rating />}
+                    />
+                </View>
+            </Animated.View>
         </View>
     );
 };
