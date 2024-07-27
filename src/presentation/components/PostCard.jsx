@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons"; // Thư viện icons
-import { ImageBackground, Text, View } from "react-native";
+import { Text, View, ImageBackground } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
@@ -11,17 +11,24 @@ import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { hexToRgba } from "../../helpers/hexToRgba";
 import { Pin } from "../../assets/img/Button";
+
 export const PostCard = ({ post }) => {
     const {
-        userImage,
-        userName = "Thao Nguyen",
+        id,
+        user = "Thao Nguyen",
         createdAt,
         images,
-        likes = Math.floor(Math.random() * 100),
-        comments = Math.floor(Math.random() * 100),
+        likes = Math.floor(Math.random() * 10000),
+        comments = Math.floor(Math.random() * 10000),
         description,
+        attraction = {},
     } = post;
-
+    const {
+        placeName = "",
+        address = "",
+        city = "",
+        country = "",
+    } = attraction || {};
     const [liked, setLiked] = useState(false);
     const [likeNumber, setLikeNumber] = useState(likes);
     const [colors, setColors] = useState({
@@ -67,12 +74,11 @@ export const PostCard = ({ post }) => {
                     source={{ uri: images[0] }}
                     className="h-[375] p-[14] flex-col justify-between shadow"
                     imageStyle={{ borderRadius: 24 }}
-                    resizeMode="cover"
                 >
                     <View className="flex-row justify-between">
                         <UserInfo
-                            userImage={userImage}
-                            userName={userName}
+                            userImage={user.avatar}
+                            userName={user.name}
                             postTime={createdAt}
                         />
 
@@ -111,6 +117,11 @@ export const PostCard = ({ post }) => {
                         </View>
                         <View className="flex-row" style={{ gap: 9 }}>
                             <Button
+                                onPress={() =>
+                                    navigation.navigate("map", {
+                                        post: [post.longitude, post.latitude],
+                                    })
+                                }
                                 icon={
                                     <Ionicons
                                         name="paper-plane-outline"
@@ -124,6 +135,7 @@ export const PostCard = ({ post }) => {
                                 onPress={() =>
                                     navigation.navigate("save", {
                                         postImage: images[0],
+                                        postId: id,
                                     })
                                 }
                                 icon={
@@ -148,7 +160,7 @@ export const PostCard = ({ post }) => {
                     <View className="flex-row items-center justify-end">
                         <Pin className="mr-[5]" />
                         <Text className=" text-neutral-600 text-[10px] font-normal font-['Montserrat']">
-                            Los Angeles, CA
+                            {(placeName, address, city, country)}
                         </Text>
                     </View>
                 </TouchableOpacity>

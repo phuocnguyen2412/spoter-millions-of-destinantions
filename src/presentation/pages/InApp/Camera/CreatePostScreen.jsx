@@ -14,91 +14,109 @@ import {
 } from "react-native";
 import { Delete } from "../../../../assets/img/Button";
 import { UserContext } from "../../../../context/user";
-import feedService from "../../../../services/feed.service";
+
 import Accordion from "../../../components/Accordion";
 import ContainerComponent from "../../../components/ContainerComponent";
 import UserInfo from "../../../components/UserInfo";
+import fileService from "../../../../services/file.service";
 const { width } = Dimensions.get("screen");
+import * as Location from "expo-location";
+import feedService from "../../../../services/feed.service";
 const CreatePostScreen = () => {
     const route = useRoute();
-    const images = route.params.images;
-
+    const images = route.params.image;
     const [caption, setCaption] = useState("");
     const { user } = React.useContext(UserContext);
     const navigation = useNavigation();
     const handleCreatePost = async () => {
-        const data = {
-            description: caption,
-            images: [image],
-            longitude: 0,
-            latitude: 0,
-        };
+        try {
+            const imageUrl = await fileService.uploadFile(images);
+            
+            let location = await Location.getCurrentPositionAsync({});
+            const data = {
+                description: caption.length > 0 ? caption : " ",
+                images: [imageUrl],
+                longitude: location.coords.longitude,
+                latitude: location.coords.latitude,
+                rate: 5,
+            };
+            console.log(data);
+            await feedService.createPost(data);
+            alert("Success!");
+        } catch (error) {
+            console.log(error);
+        }
 
-        const res = await feedService.createPost(data);
+        // const res = await feedService.createPost(data);
     };
 
     return (
-        <SafeAreaView className="flex-1 bg-white">
-            <ContainerComponent>
-                <View className="flex-row justify-between py-5">
-                    <View className="flex-row gap-x-4 items-center">
-                        <TouchableOpacity
-                            className="flex-row items-center justify-center"
-                            onPress={() => navigation.goBack("take-photo")}
-                        >
-                            <Delete />
-                        </TouchableOpacity>
-                        <Text className="text-neutral-900 text-base leading-[18px]">
-                            Create a post
-                        </Text>
-                    </View>
+        <ContainerComponent>
+            <View className="flex-row justify-between py-5">
+                <View className="flex-row gap-x-4 items-center">
+                    <TouchableOpacity
+                        className="flex-row items-center justify-center"
+                        onPress={() => navigation.goBack("take-photo")}
+                    >
+                        <Delete />
+                    </TouchableOpacity>
+                    <Text className="text-neutral-900 text-base leading-[18px]">
+                        Create a post
+                    </Text>
+                </View>
 
-                    <TouchableOpacity onPress={handleCreatePost}>
-                        <Text
-                            className=" text-2xl  font-semibold font-['Montserrat'] leading-7"
+                <TouchableOpacity onPress={handleCreatePost}>
+                    <Text
+                        className=" text-2xl  font-semibold font-['Montserrat'] leading-7"
+                        style={{
+                            color: color.primary,
+                        }}
+                    >
+                        POST
+                    </Text>
+                </TouchableOpacity>
+            </View>
+            <ScrollView>
+                <View className="flex-col justify-between flex-1">
+                    <View className="flex-1">
+                        <UserInfo
+                            disableAdd={true}
+                            userName={user.name}
+                            textDark={true}
+                            userImage={user.avatar}
+                        />
+                        <TextInput
+                            multiline
+                            value={caption}
+                            className="flex-wrap w-[344px] text-neutral-600 text-xs font-normal font-['Montserrat'] leading-[14px] mb-3 mt-4"
+                            placeholder="Add a description..."
+                            placeholderTextColor={"#525252"}
+                            onChangeText={setCaption}
+                        />
+                        <View
+                            className="rounded-[15px] shadow overflow-hidden"
                             style={{
-                                color: color.primary,
+                                height: width,
+                                width: "100%",
+                                borderRadius: 15,
                             }}
                         >
-                            POST
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                <ScrollView>
-                    <View className="flex-column justify-between flex-1">
-                        <View>
-                            <UserInfo
-                                disableAdd={true}
-                                userName={user.name}
-                                textDark={true}
-                                postTime={dayjs(new Date().getTime()).format(
-                                    "DD-MM-YYYY HH:mm"
-                                )}
-                                userImage={user.avatar}
+                            <Image
+                                source={images.uri}
+                                style={{
+                                    height: width,
+                                    width: "100%",
+                                    borderRadius: 15,
+                                }}
+                                className="rounded-[15px] overflow-hidden"
+                                containFit="contain"
                             />
-                            <TextInput
-                                multiline
-                                value={caption}
-                                className="flex-wrap w-[344px] text-neutral-600 text-xs font-normal font-['Montserrat'] leading-[14px] mb-3 mt-4"
-                                placeholder="Add a description..."
-                                onChangeText={setCaption}
-                            />
-                            <View className=" rounded-[15px] shadow overflow-hidden">
-                                <Image
-                                    source={images[0].uri}
-                                    style={{
-                                        height: width,
-                                        width: "100%",
-                                    }}
-                                    resizeMode="contain"
-                                />
-                            </View>
                         </View>
                     </View>
-                </ScrollView>
-                <Accordion images={images} />
-            </ContainerComponent>
-        </SafeAreaView>
+                </View>
+            </ScrollView>
+            <Accordion images={images} />
+        </ContainerComponent>
     );
 };
 

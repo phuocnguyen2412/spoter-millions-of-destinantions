@@ -45,7 +45,7 @@ const DetailChanllenge = () => {
                     />
                     <Info
                         title={position}
-                        description={"Starbucks Bachdang, Star..."}
+                        description={"23km near here"}
                         icon={<PinChallenge />}
                     />
                     <Info

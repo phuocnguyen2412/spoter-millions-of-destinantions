@@ -25,6 +25,7 @@ import color from "../../../contants/color";
 
 import _countries from "../../../../data/contries";
 import {
+    Collection,
     Distance,
     Line,
     PersonReview,
@@ -40,7 +41,9 @@ import {
 import feedService from "../../../../services/feed.service";
 import Loading from "../../../components/Loading";
 import { isLoading } from "../../../../../node_modules/expo-font/build/Font";
+import FloatingButtonComponent from "../../../components/FloatingButtonComponent";
 const Suggest = () => {
+    const navigation = useNavigation();
     const [isLoading, setIsLoading] = React.useState(false);
     const [posts, setPosts] = React.useState([]);
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -62,18 +65,30 @@ const Suggest = () => {
     return (
         <SafeAreaView className="px-6 bg-white flex-1">
             <ContainerComponent>
-                <View className="px-5 py-2 bg-neutral-50 rounded-[35px] border border-neutral-300 flex-row justify-between items-center mb-5 relative">
-                    <View>
-                        <KinhLup class="h-1 w-1" />
-                    </View>
+                <View className="flex-row items-center justify-between gap-x-3 mb-5 ">
+                    <View className="px-5 py-2 bg-neutral-50 rounded-[35px] border border-neutral-300 flex-row justify-between items-center relative flex-1">
+                        <View>
+                            <KinhLup class="h-1 w-1" />
+                        </View>
 
-                    <TextInput
-                        className="ml-5 flex-1"
-                        placeholder="Seach here"
-                    />
-                    <TouchableOpacity onPress={() => setModalVisible(true)}>
-                        <Filter />
-                    </TouchableOpacity>
+                        <TextInput
+                            className="ml-5 flex-1"
+                            placeholder="Seach here"
+                        />
+                        <TouchableOpacity onPress={() => setModalVisible(true)}>
+                            <Filter />
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity
+                            onPress={() =>
+                                navigation.navigate("suggest-collections")
+                            }
+                            className="w-[50px] h-[50px] px-3.5 py-[15px] rounded-[25px] border border-neutral-300 flex-col justify-between items-center inline-flex"
+                        >
+                            <Collection />
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 <View className="flex-1">

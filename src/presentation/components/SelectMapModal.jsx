@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    View
+    View,
 } from "react-native";
 import { Delete, Filter } from "../../assets/img/Button";
 import FloatingButtonComponent from "./FloatingButtonComponent";
@@ -53,6 +53,9 @@ const SelectMapModal = ({ urlMap, setUrlMap }) => {
                 animationType="slide"
                 transparent={true}
                 visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
             >
                 <View className="relative flex-1 bg-transparent justify-end pb-6">
                     <View className="flex-row justify-center items-end ">

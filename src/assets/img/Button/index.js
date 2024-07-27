@@ -59,7 +59,43 @@ import SaveFullFill from "./save-fullfill.svg";
 import Hotel from "./hotel.svg";
 import Coffee from "./coffee.svg";
 import Building from "./building.svg";
+import Email from "./email.svg";
+import Pen from "./pen.svg";
+import Message from "./message.svg";
+import Pin2 from "./pin2.svg";
+import AvatarList from "./avatar-list.svg";
+import LineDart from "./line-dart.svg";
+import Pin3 from "./pin3.svg";
+import Star2 from "./star2.svg";
+import DrinkPin from "./drink-pin.svg";
+import CheckinPin from "./checkin-pin.svg";
+import ShoppingPin from "./shopping-pin.svg";
+import RestaurentPin from "./restaurent-pin.svg";
+import Collection from "./collection.svg";
+import Ads from "./ads.svg";
+import Add2 from "./add2.svg";
+import Pin4 from "./pin4.svg";
+import Pen2 from "./pen2.svg";
+import Wallet2 from "./wallet2.svg";
 export {
+    Wallet2,
+    Add2,
+    Pin4,
+    Pen2,
+    Ads,
+    Collection,
+    DrinkPin,
+    CheckinPin,
+    ShoppingPin,
+    RestaurentPin,
+    Star2,
+    Pin3,
+    AvatarList,
+    LineDart,
+    Pin2,
+    Email,
+    Pen,
+    Message,
     Hotel,
     Coffee,
     Building,

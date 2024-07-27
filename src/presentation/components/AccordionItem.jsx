@@ -9,7 +9,7 @@ import { ArrowDown, ArrowRightToLeft } from "../../assets/img/Button";
 import _countries from "../../data/contries";
 import Rating from "./Rating";
 
-const AccordionItem = ({ title, content, icon }) => {
+const AccordionItem = ({ title, content, icon, description }) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
     return (
         <View className="my-4">
@@ -18,10 +18,18 @@ const AccordionItem = ({ title, content, icon }) => {
                 onPress={() => setIsCollapsed(!isCollapsed)}
             >
                 <View className="flex-row items-center">
-                    {icon}
-                    <Text className="ml-6 text-neutral-600 text-sm font-medium font-['Montserrat']">
-                        {title}
-                    </Text>
+                    {icon && <View className="mr-3">{icon}</View>}
+
+                    <View className="flex-col items-center justify-center">
+                        <Text className=" text-neutral-600 text-sm font-medium font-['Montserrat']">
+                            {title}
+                        </Text>
+                        {description && (
+                            <Text className=" text-neutral-400 text-[10px] font-normal font-['Montserrat']">
+                                {description}
+                            </Text>
+                        )}
+                    </View>
                 </View>
                 {isCollapsed ? <ArrowDown /> : <ArrowRightToLeft />}
             </TouchableOpacity>
@@ -55,29 +63,23 @@ const CountryCollapsible = () => {
     const [country, setCountry] = useState("1");
     const [query, setQuery] = useState("");
     return (
-        <View className=" min-h-[399]">
-            <AutocompleteInput
-                containerStyle={{
-                    width: "80%",
-                    alignContent: "flex-end",
-                }}
-                data={_countries}
-                value={query}
-                onChangeText={setQuery}
-                flatListProps={{
-                    keyExtractor: (_, idx) => idx,
-                    renderItem: ({ item }) => (
-                        <View className="flex-row my-2">
-                            <Image
-                                source={item.image.uri}
-                                className="w-4 h-4 mr-2"
-                            />
-                            <Text>{item.value}</Text>
-                        </View>
-                    ),
-                }}
-                hideResults={false}
-            />
+        <View className="ml-[30]">
+            <Text className="text-neutral-600 text-[14px] font-normal font-['Montserrat'] mb-[15]">
+                Find the country
+            </Text>
+            <View>
+                {_countries.map((country, index) => (
+                    <View className="flex-row gap-x-2 items-center mb-[13]">
+                        <Image
+                            className="w-6 h-3.5 rounded-sm"
+                            source={country.image}
+                        />
+                        <Text className="text-neutral-600 text-xs font-normal font-['Montserrat'] ">
+                            {country.lable}
+                        </Text>
+                    </View>
+                ))}
+            </View>
         </View>
     );
 };
@@ -162,7 +164,8 @@ const PersionReview = () => {
     );
 };
 export {
-    AccordionItem, CountryCollapsible, DistanceCollapsible,
-    PersionReview
+    AccordionItem,
+    CountryCollapsible,
+    DistanceCollapsible,
+    PersionReview,
 };
-

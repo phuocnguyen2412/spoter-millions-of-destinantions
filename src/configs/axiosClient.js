@@ -3,7 +3,7 @@ import { API_URL } from "@env";
 import { getDataFromStorage } from "../helpers/storage";
 
 const axiosClient = axios.create({
-    baseURL: "http://localhost:3000/api/v1",
+    baseURL: "https://wm8bvp79-3000.asse.devtunnels.ms/api/v1",
     headers: {
         "content-type": "application/json",
     },

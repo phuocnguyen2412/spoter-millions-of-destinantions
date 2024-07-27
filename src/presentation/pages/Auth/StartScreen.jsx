@@ -21,6 +21,8 @@ const StartScreen = () => {
             } catch (error) {
                 setIsLogin(false);
                 console.log(error);
+            } finally {
+                setIsLogin(false);
             }
         })();
     }, []);

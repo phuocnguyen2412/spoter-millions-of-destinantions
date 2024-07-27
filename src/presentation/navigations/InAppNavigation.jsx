@@ -19,6 +19,8 @@ import { UserContext } from "../../context/user";
 import userService from "../../services/user.service";
 import ChallengeNavigation from "./ChallengeNavigation";
 import SuggestNavigation from "./SuggestNavigation";
+import { useNavigation } from "@react-navigation/native";
+import ProfileNavigation from './ProfileNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -59,18 +61,22 @@ const TabArr = [
         route: "my-profile",
         label: "Profile",
         icon: ProfileIcon,
-        component: Profile,
+        component: ProfileNavigation,
     },
 ];
 
 const InAppNavigation = () => {
+    const navigation = useNavigation();
     const { updateUser } = React.useContext(UserContext);
-    const getUserInfo = async () => {
-        const data = await userService.getMyInfo();
-        updateUser(data.data);
-    };
     React.useEffect(() => {
-        getUserInfo();
+        (async () => {
+            try {
+                const data = await userService.getMyInfo();
+                updateUser(data.data);
+            } catch (error) {
+                navigation.navigate("login");
+            }
+        })();
     }, []);
     return (
         <Tab.Navigator

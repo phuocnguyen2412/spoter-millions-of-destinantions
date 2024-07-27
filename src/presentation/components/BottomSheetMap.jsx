@@ -8,7 +8,13 @@ import Rating from "./Rating";
 import UserInfo from "./UserInfo";
 
 const BottomSheetMap = ({ info }) => {
-    const { postImage, userName, postTime, userImage, caption } = info;
+    const {
+        images,
+        userName = "Thao nguyen",
+        createdAt,
+        avatar,
+        description,
+    } = info;
     // ref
     const navigation = useNavigation();
     const bottomSheetRef = useRef(null);
@@ -25,12 +31,13 @@ const BottomSheetMap = ({ info }) => {
             onChange={handleSheetChanges}
             snapPoints={[215]}
             enablePanDownToClose
+            className="bg-transparent"
         >
-            <BottomSheetView className="flex-1">
+            <BottomSheetView className="flex-1 bg-transparent">
                 <View className="flex-row p-5 gap-x-[11]">
                     <View className="shadow overflow-hidden">
                         <Image
-                            source={postImage}
+                            source={images[0]}
                             className="w-[140px] h-[140px] rounded-[25px]"
                             containFit="center"
                         />
@@ -39,26 +46,28 @@ const BottomSheetMap = ({ info }) => {
                         <View>
                             <UserInfo
                                 textDark
-                                userImage={userImage}
+                                userImage={avatar}
                                 userName={userName}
-                                postTime={postTime}
+                                postTime={createdAt}
                                 className="mb-2"
                             />
                             <Text className="text-neutral-500 text-[10px] font-normal font-['Montserrat']">
-                                {caption}
+                                {description}
                             </Text>
                         </View>
-                        <Rating isDisabled={true} />
-                        <TouchableOpacity
-                            className="flex-row justify-end"
-                            onPress={() =>
-                                navigation.navigate("detail-post", {
-                                    post: info,
-                                })
-                            }
-                        >
-                            <BackLeftToRight className="w-[30] h-[30] mr-4" />
-                        </TouchableOpacity>
+                        <View className="flex-row justify-between items-center">
+                            <Rating isDisabled={true} />
+                            <TouchableOpacity
+                                className="flex-row justify-end"
+                                onPress={() =>
+                                    navigation.navigate("detail-post", {
+                                        post: info,
+                                    })
+                                }
+                            >
+                                <BackLeftToRight className="w-[30] h-[30] mr-4" />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </BottomSheetView>

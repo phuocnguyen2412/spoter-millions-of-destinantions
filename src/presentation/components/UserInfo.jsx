@@ -1,9 +1,10 @@
 import dayjs from "dayjs";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import { timeElapsed } from "../../helpers/timeElapsed";
 
 const UserInfo = ({
-    userImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY-hjuFaNMnEAp28Q9Mo7x6QK_IyHnKdOqqA&s",
+    userImage = "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/anh-den-ngau.jpeg",
 
     postTime,
     userName,
@@ -39,8 +40,15 @@ const UserInfo = ({
         },
     });
     return (
-        <View className="relative flex-row" style={style}>
-            <Image source={{ uri: userImage }} style={styles.userImage} />
+        <View className="relative flex-row items-center" style={style}>
+            <Image
+                source={{
+                    uri:
+                        userImage ||
+                        "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/anh-den-ngau.jpeg",
+                }}
+                style={styles.userImage}
+            />
             {!disableAdd && (
                 <Image
                     source={require("../../assets/img/follow-icon.png")}
@@ -54,12 +62,14 @@ const UserInfo = ({
                 >
                     {userName}
                 </Text>
-                <Text
-                    style={styles.postTime}
-                    className="text-[11px] font-['Montserrat']"
-                >
-                    {dayjs(postTime).format("DD/MM/YYYY")}
-                </Text>
+                {postTime && (
+                    <Text
+                        style={styles.postTime}
+                        className="text-[11px] font-['Montserrat']"
+                    >
+                        {timeElapsed(postTime)}
+                    </Text>
+                )}
             </View>
         </View>
     );

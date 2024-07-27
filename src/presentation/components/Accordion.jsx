@@ -16,7 +16,8 @@ import {
     Unchecked,
 } from "../../assets/img/Button";
 import Rating from "./Rating";
-const Form = ({ title, description, icon }) => {
+const Form = ({ title, description, checked, icon }) => {
+    const [isChecked, setIsChecked] = useState(false);
     return (
         <View className=" rounded-tr-[15px] shadow mb-3 px-[38] ">
             <View className="w-full h-[0px] border border-neutral-200 mb-[10]"></View>
@@ -29,6 +30,11 @@ const Form = ({ title, description, icon }) => {
                         {description}
                     </Text>
                 </View>
+                {checked && (
+                    <TouchableOpacity onPress={() => setIsChecked(!isChecked)}>
+                        {isChecked ? <Checked /> : <Unchecked />}
+                    </TouchableOpacity>
+                )}
                 {icon}
             </View>
         </View>
@@ -78,18 +84,16 @@ const Accordion = ({ images }) => {
             <Animated.View style={[{ height }]}>
                 <View>
                     <Form
+                        checked={true}
                         title="Pin on Map"
                         description="Enabling pin will allow everybody can see"
-                        icon={<Checked />}
                     />
                     <Form
-                        checked={false}
+                        checked={true}
                         title="Comment"
                         description="You allow people to comment your post"
-                        icon={<Unchecked />}
                     />
                     <Form
-                        checked={false}
                         title="Evaluate"
                         description="Rate this place"
                         icon={<Rating />}

@@ -3,20 +3,17 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
-import {
-    TouchableOpacity,
-    View
-} from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { NewPostLogo } from "../../../../assets/img/Button";
 import feedService from "../../../../services/feed.service";
 import ContainerComponent from "../../../components/ContainerComponent";
 import Loading from "../../../components/Loading";
 import { PostCard } from "../../../components/PostCard";
-
+import color from "../../../contants/color";
 const NewFeed = () => {
     const [loading, setLoading] = React.useState(false);
     const [posts, setPosts] = React.useState([]);
-    const [page, setPage] = React.useState(2);
+    const [page, setPage] = React.useState(0);
     const fetchData = async () => {
         try {
             setLoading(true);
@@ -44,18 +41,24 @@ const NewFeed = () => {
                         <Ionicons
                             name="notifications-outline"
                             size={24}
-                            color="black"
+                            color={color.primary}
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => navigation.navigate("map")}
                     >
-                        <Ionicons name="map-outline" size={24} color="black" />
+                        <Ionicons
+                            name="map-outline"
+                            size={24}
+                            color={color.primary}
+                        />
                     </TouchableOpacity>
                 </View>
             </View>
             {loading ? (
-                <Loading />
+                <View className="w-full h-full flew-col flex-1 justify-center items-center">
+                    <Loading />
+                </View>
             ) : (
                 <ContainerComponent>
                     <FlashList

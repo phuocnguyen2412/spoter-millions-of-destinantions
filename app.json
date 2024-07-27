@@ -1,7 +1,7 @@
 {
     "expo": {
         "name": "spoter",
-        "slug": "millions-of-destinations",
+        "slug": "my-app",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./src/assets/img/logo-icon.png",

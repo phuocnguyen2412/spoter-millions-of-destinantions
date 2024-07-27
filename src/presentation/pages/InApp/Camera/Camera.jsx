@@ -1,28 +1,45 @@
 import {
+    useFocusEffect,
     useNavigation,
-    useRoute
+    useRoute,
 } from "@react-navigation/native";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { CloseSquare, FlashCircle } from "iconsax-react-native";
 import {
     Flash,
     RotateCamera,
-    TakingPhoto
+    TakingPhoto,
 } from "../../../../assets/img/Button";
 
 const Camera = () => {
-    const data = useRoute().params?.images || [];
-    console.log(data);
     const [facing, setFacing] = useState("back");
     const [flash, setFlash] = useState(false);
     const [permission, requestPermission] = useCameraPermissions();
-    const [images, setImages] = useState(data);
+    const [images, setImages] = useState({});
 
     const imageRef = useRef(null);
     const navigation = useNavigation();
+    useFocusEffect(
+        useCallback(() => {
+            const parentNavigation = navigation.getParent();
+            parentNavigation?.setOptions({
+                tabBarStyle: { display: "none" },
+            });
+
+            return () => {
+                parentNavigation?.setOptions({
+                    tabBarStyle: {
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                    },
+                });
+            };
+        }, [navigation])
+    );
     if (!permission) {
         // Camera permissions are still loading.
         return <View />;
@@ -46,10 +63,13 @@ const Camera = () => {
     const textPicture = async () => {
         if (imageRef) {
             try {
-                const photo = await imageRef.current.takePictureAsync();
-                setImages((current) => [...current, photo]);
+                const photo = await imageRef.current.takePictureAsync({
+                    base64: true,
+                    quality: 0.7,
+                });
+                setImages(photo);
                 navigation.navigate("create-post", {
-                    images: [...images, photo],
+                    image: photo,
                 });
             } catch (e) {
                 console.error(e);
@@ -59,23 +79,19 @@ const Camera = () => {
     const toggleFlash = () => {
         setFlash(!flash);
     };
+
     return (
-        <View className="flex-1 pt-9 bg-black">
-            <View className="flex-row bg-black justify-between items-center py-4 px-6">
-                <TouchableOpacity
-                    onPress={() => {
-                        navigation.goBack();
-                    }}
-                    className="flex-row"
-                >
-                    <CloseSquare color="white" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={toggleCameraFacing}>
-                    <FlashCircle color="white" />
-                </TouchableOpacity>
-            </View>
+        <View className="flex-1  bg-black">
             <View className="flex-1 justify-center">
-                <View className="flex-1 bg-slate-600 p-5">
+                <View className="flex-1 relative">
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.goBack();
+                        }}
+                        className="absolute right-[40] top-[70] z-10"
+                    >
+                        <CloseSquare color="white" />
+                    </TouchableOpacity>
                     <CameraView
                         flash={flash}
                         cameraRatio="1:1"

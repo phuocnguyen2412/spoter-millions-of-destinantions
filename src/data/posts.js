@@ -95,20 +95,4 @@ export default _posts = [
         latitude: 12.9995,
         longitude: 107.9963,
     },
-    {
-        userImage:
-            "https://photo.znews.vn/w660/Uploaded/qhj_yvobvhfwbv/2018_07_18/Nguyen_Huy_Binh1.jpg",
-
-        userName: "Esther Howard",
-        postTime: "02:34 am",
-        postImage:
-            "https://cdn.24h.com.vn/upload/2-2019/images/2019-04-03/dep-phat-ngat-loat-anh-check-in-o-Nam-Du-cua-nang-9X-chung-minh-thien-duong-la-co-that-2-1554289679-900-width960height720.jpg",
-
-        likes: Math.floor(Math.random() * 10000),
-        comments: Math.floor(Math.random() * 10000),
-        caption:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. 😁",
-        latitude: 15.9995,
-        longitude: 117.9963,
-    },
 ];

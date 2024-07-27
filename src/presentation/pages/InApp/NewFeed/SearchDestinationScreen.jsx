@@ -23,9 +23,20 @@ import {
 import { Home } from "iconsax-react-native";
 import _maps from "../../../../data/map";
 import { useNavigation } from "@react-navigation/native";
+import mapService from "../../../../services/map.service";
 
 const SearchDestinationScreen = () => {
     const navigation = useNavigation();
+    const [inputSearch, setInputSearch] = React.useState("");
+    const handleSearch = async () => {
+        try {
+            const data = await mapService.findLocationByName(inputSearch);
+            const coordinates = data[0].geometry.coordinates;
+            navigation.navigate("map", { post: coordinates });
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <SafeAreaView className="flex-1 bg-neutral-50 ">
             <View className="px-6">
@@ -39,11 +50,20 @@ const SearchDestinationScreen = () => {
                             <BackRightToLeft className="mr-6" />
                         </TouchableOpacity>
 
-                        <TextInput multiline placeholder="Search here..." />
+                        <TextInput
+                            value={inputSearch}
+                            onChangeText={setInputSearch}
+                            multiline
+                            placeholder="Search here..."
+                            returnKeyType="search"
+                            onSubmitEditing={handleSearch}
+                        />
                     </View>
-                    <View className="flex-row justify-center items-center">
-                        <Microphone />
-                    </View>
+                    <TouchableOpacity onPress={handleSearch}>
+                        <View className="flex-row justify-center items-center">
+                            <Microphone />
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <View className="mb-[22] flex-row items-center">
                     <ScrollView horizontal>

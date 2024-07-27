@@ -9,7 +9,7 @@ const MissionComponent = ({ info }) => {
     const navigation = useNavigation();
     return (
         <TouchableOpacity
-            className="bg-neutral-50 rounded-[15px] shadow border border-neutral-300 p-[11] flex-row mb-[15] relative"
+            className="bg-neutral-50 rounded-[15px] shadow border border-neutral-300 py-[11] pl-[11] pr-[40] flex-row mb-[15] relative"
             onPress={() => navigation.navigate("detail-challenge", { info })}
         >
             <View className="shadow h-[80] w-[80]  mr-[20]">
@@ -31,9 +31,9 @@ const MissionComponent = ({ info }) => {
                     </Text>
                 </View>
 
-                <View className="flex-row items-center">
+                <View className="flex-row items-center w-full">
                     <Pin className="mr-2" />
-                    <Text className="text-neutral-400 text-[10px] font-normal font-['Montserrat']">
+                    <Text className="text-neutral-400 text-[10px] font-normal font-['Montserrat'] flex-1">
                         {position}
                     </Text>
                 </View>

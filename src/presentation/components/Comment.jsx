@@ -1,12 +1,14 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import { timeElapsed } from "../../helpers/timeElapsed";
 
-const CommentComponent = ({ commentInfo }) => {
-    const { userImage, comment, time } = commentInfo;
+const CommentComponent = ({ data }) => {
+    console.log(data);
+    const { user, content, createdAt } = data;
     return (
         <View className="flex-row item-start justify-center mb-4">
             <Image
-                source={{ uri: userImage }}
+                source={{ uri: user.avatar }}
                 style={{
                     height: 40,
                     width: 40,
@@ -17,11 +19,11 @@ const CommentComponent = ({ commentInfo }) => {
             />
             <View className="flex-1">
                 <Text className="text-black text-xs font-normal font-['Montserrat'] leading-[14px] tracking-tight mb-1">
-                    {comment}
+                    {content}
                 </Text>
                 <View className="flex-row gap-3">
                     <Text className="text-neutral-500 text-xs font-normal font-['Montserrat'] leading-[14px]">
-                        {time}
+                        {timeElapsed(createdAt)}
                     </Text>
                     <Text className="text-neutral-500 text-xs font-normal font-['Montserrat'] leading-[14px]">
                         Reply

@@ -1,9 +1,5 @@
-import { Ionicons } from "@expo/vector-icons";
-import {
-    useIsFocused,
-    useNavigation
-} from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
     KeyboardAvoidingView,
     Platform,
@@ -20,66 +16,99 @@ import UserInfo from "../../components/UserInfo";
 import {
     Back,
     Comment,
-    GifTextBox,
     Navigation,
     Save,
     Send,
-    SmileTextBox,
-    StickerTextBox
 } from "../../../assets/img/Button";
 
 import { Image } from "expo-image";
-import imageButton from "../../../assets/img/button-img/index";
-import _comments from "../../../data/comments";
 import CommentComponent from "../../components/Comment";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import commentService from "../../../services/comment.service";
+import Loading from "../../components/Loading";
 const DetailPostScreen = ({ route }) => {
     const navigation = useNavigation();
-    // Check if the screen is focused
-    const [commentText, setCommentText] = useState("");
-    const [liked, setLiked] = useState(false);
-    // Use the focus state to hide the tab bar
-    const isFocused = useIsFocused();
-    useEffect(() => {
-        if (isFocused) {
-            navigation.getParent().setOptions({
-                tabBarStyle: { display: "none" },
-            });
-        } else {
-            navigation.getParent().setOptions({
-                tabBarStyle: { display: "flex" },
-            });
-        }
-    }, [isFocused]);
+    const post = route.params.post;
 
     const {
-        userImage,
-        userName,
-        postTime,
-        postImage,
-        likes,
-        comments,
-        caption,
-    } = route.params.post;
+        id,
+        user,
+        createdAt,
+        images,
+
+        description,
+    } = post;
+
+    const [commentText, setCommentText] = useState("");
+    const [liked, setLiked] = useState(false);
+    const [comments, setComments] = useState(null);
+
+    useFocusEffect(
+        useCallback(() => {
+            const parentNavigation = navigation.getParent();
+            parentNavigation?.setOptions({
+                tabBarStyle: { display: "none" },
+            });
+
+            return () => {
+                parentNavigation?.setOptions({
+                    tabBarStyle: {
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                    },
+                });
+            };
+        }, [navigation])
+    );
+    const createComment = async () => {
+        try {
+            await commentService.createComment({
+                postId: id,
+                content: commentText,
+            });
+            setCommentText("");
+            fetchComments();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const fetchComments = async () => {
+        try {
+            const data = await commentService.getCommentOfPost(id, 0, 100);
+
+            setComments(data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const toggleLike = () => {
         setLiked(!liked);
     };
 
+    useEffect(() => {
+        fetchComments();
+    }, [id]);
+
     return (
-        <SafeAreaView className="flex-1 bg-white">
+        <SafeAreaView
+            className="flex-1 bg-white"
+            showsVerticalScrollIndicator={false}
+        >
             <ScrollView className="px-6">
                 <View className="flex-row justify-between items-center mb-2">
                     <View className="flex-row items-center flex-1">
-                        <TouchableOpacity onPress={navigation.goBack}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
                             <Back />
                         </TouchableOpacity>
 
                         <UserInfo
                             style={{ marginLeft: 16 }}
                             textDark={true}
-                            userImage={userImage}
-                            userName={userName}
-                            postTime={postTime}
+                            userImage={user.avatar}
+                            userName={user.name}
+                            postTime={createdAt}
                         />
                     </View>
                     <View>
@@ -92,10 +121,10 @@ const DetailPostScreen = ({ route }) => {
                 </View>
 
                 <Text className="text-black text-sm font-normal font-['Montserrat'] leading-none mb-3">
-                    {caption}
+                    {description}
                 </Text>
                 <Image
-                    source={{ uri: postImage }}
+                    source={{ uri: images[0] }}
                     style={styles.image}
                     contentFit="cover"
                 />
@@ -120,18 +149,18 @@ const DetailPostScreen = ({ route }) => {
                                     size={26}
                                     color={liked ? "red" : "black"}
                                 />
-                                <Text
-                                    style={{ color: liked ? "red" : "black" }}
-                                    className="ml-2 text-red-500 text-base font-medium font-['Montserrat'] "
-                                >
-                                    {likes}
+                                <Text className="ml-2 text-base font-medium font-['Montserrat']">
+                                    {useMemo(
+                                        () => Math.floor(Math.random() * 10000),
+                                        []
+                                    )}
                                 </Text>
                             </TouchableOpacity>
                         </View>
                         <View className="flex-row items-center">
-                            <Comment />
+                            <Comment width={26} height={26} />
                             <Text className="ml-2 text-base font-medium font-['Montserrat']">
-                                {comments}
+                                {comments?.length}
                             </Text>
                         </View>
                     </View>
@@ -145,12 +174,13 @@ const DetailPostScreen = ({ route }) => {
                     </View>
                 </View>
                 <View>
-                    {_comments.map((commentInfo, index) => (
-                        <CommentComponent
-                            key={index}
-                            commentInfo={commentInfo}
-                        />
-                    ))}
+                    {comments ? (
+                        comments.map((commentInfo, index) => (
+                            <CommentComponent key={index} data={commentInfo} />
+                        ))
+                    ) : (
+                        <Loading />
+                    )}
                 </View>
             </ScrollView>
             <KeyboardAvoidingView
@@ -169,22 +199,31 @@ const DetailPostScreen = ({ route }) => {
                     <View className="flex-row justify-between items-center">
                         <View style={styles.iconContainer} className="gap-2">
                             <TouchableOpacity>
-                                <SmileTextBox />
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Image
-                                    source={imageButton.camera}
-                                    className="w-[24] h-[24]"
+                                <Ionicons
+                                    name="happy-outline"
+                                    size={20}
+                                    color="grey"
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity>
-                                <GifTextBox />
+                                <Ionicons
+                                    name="camera-outline"
+                                    size={20}
+                                    color="grey"
+                                />
                             </TouchableOpacity>
                             <TouchableOpacity>
-                                <StickerTextBox />
+                                <MaterialIcons
+                                    name="gif-box"
+                                    size={20}
+                                    color="grey"
+                                />
                             </TouchableOpacity>
+                            <TouchableOpacity>
+                                <MaterialIcons name="" size={20} color="grey" />
+                            </TouchableOpacity>  
                         </View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={createComment}>
                             <Send />
                         </TouchableOpacity>
                     </View>

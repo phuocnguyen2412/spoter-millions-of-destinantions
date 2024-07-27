@@ -6,45 +6,28 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
-    View
+    View,
 } from "react-native";
-import { Follow, LineProfile, Share } from "../../../../assets/img/Button";
+import { Ads, Follow, LineProfile, Share } from "../../../../assets/img/Button";
 import { UserContext } from "../../../../context/user";
-import posts from "../../../../data/posts";
 import color from "../../../contants/color";
 
-
+import Icon from "react-native-vector-icons/Ionicons";
+import UserCollections from "./UserCollections";
+import UserImages from "./UserImages";
+import UserPosts from "./UserPosts";
+import { useNavigation } from "@react-navigation/native";
 const Tab = createMaterialTopTabNavigator();
-const FirstRoute = () => {
-    return (
-        <View className="pt-[15] flex-1 flex-row flex-wrap justify-between bg-neutral-50">
-            {posts.map((post, index) => (
-                <TouchableOpacity key={index}>
-                    <Image
-                        style={{
-                            width: 120,
-                            height: 120,
-                            borderRadius: 10,
-                            marginBottom: 15,
-                        }}
-                        source={{ uri: post.postImage }}
-                    />
-                </TouchableOpacity>
-            ))}
-        </View>
-    );
-};
-
-const SecondRoute = () => {
-    console.log(2);
-    return <View style={{ flex: 1, backgroundColor: "#673ab7" }} />;
-};
 
 function UserProfile() {
     const { user } = React.useContext(UserContext);
+    const navigation = useNavigation()
     return (
         <View>
-            <View>
+            <View className="relative">
+                <TouchableOpacity onPress={()=>navigation.navigate("create-ads")} className="absolute z-20 right-[24] top-[60]">
+                    <Ads />
+                </TouchableOpacity>
                 <Image
                     className="w-full h-[223px] rounded-bl-[25px] rounded-br-[25px]"
                     source={
@@ -107,12 +90,65 @@ const Profile = () => {
     return (
         <View className="flex-1">
             <ScrollView className="flex-1 bg-neutral-50">
-                <UserProfile></UserProfile>
+                <UserProfile />
                 <View className="-mt-[29] px-6 flex-1 h-[1000] bg-neutral-50 ">
-                    <Tab.Navigator className="bg-neutral-50 " op>
-                        <Tab.Screen name="1" component={FirstRoute} />
-                        <Tab.Screen name="2" component={SecondRoute} />
-                        <Tab.Screen name="3" component={SecondRoute} />
+                    <Tab.Navigator
+                        className="bg-neutral-50 "
+                        screenOptions={({ route }) => ({
+                            headerShown: false,
+                            tabBarShowLabel: false,
+                            tabBarIcon: ({ focused, color, size }) => {
+                                let iconName;
+                                let iconSize = 24;
+                                switch (route.name) {
+                                    case "user-posts":
+                                        iconName = focused
+                                            ? "apps"
+                                            : "apps-outline";
+                                        break;
+                                    case "user-images":
+                                        iconName = focused
+                                            ? "image"
+                                            : "image-outline";
+                                        break;
+                                    case "user-collections":
+                                        iconName = focused
+                                            ? "bookmark"
+                                            : "bookmark-outline";
+                                        break;
+                                    default:
+                                        iconName = focused
+                                            ? "bookmark"
+                                            : "bookmark-outline";
+                                }
+                                return (
+                                    <Icon
+                                        name={iconName}
+                                        size={iconSize}
+                                        color={color}
+                                    />
+                                );
+                            },
+                            tabBarActiveTintColor: "black",
+                            tabBarInactiveTintColor: "gray",
+                            tabBarStyle: {
+                                backgroundColor: "transparent",
+                            },
+
+                            tabBarIndicatorStyle: {
+                                backgroundColor: "#404040",
+                                width: 40,
+                                left: "16.75%",
+                                marginLeft: -20,
+                            },
+                        })}
+                    >
+                        <Tab.Screen name="user-posts" component={UserPosts} />
+                        <Tab.Screen name="user-images" component={UserImages} />
+                        <Tab.Screen
+                            name="user-collections"
+                            component={UserCollections}
+                        />
                     </Tab.Navigator>
                 </View>
             </ScrollView>

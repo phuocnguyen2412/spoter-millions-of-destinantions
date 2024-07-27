@@ -1,41 +1,18 @@
-import {
-    useFocusEffect,
-    useNavigation,
-    useRoute,
-} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import DetailPostScreen from "../pages/InApp/DetailPostScreen";
+import AttractionPin from "../pages/InApp/NewFeed/AttractionPin";
+import CreateCollection from "../pages/InApp/NewFeed/CreateCollection";
 import MapScreen from "../pages/InApp/NewFeed/MapScreen";
 import NewFeed from "../pages/InApp/NewFeed/NewFeed";
 import NotificationScreen from "../pages/InApp/NewFeed/NotificationScreen";
+import PersionPin from "../pages/InApp/NewFeed/PersionPin";
 import SaveScreen from "../pages/InApp/NewFeed/SaveScreen";
 import SearchDestinationScreen from "../pages/InApp/NewFeed/SearchDestinationScreen";
+import DetailCollection from "../pages/InApp/DetailCollection";
 const Stack = createNativeStackNavigator();
 
 const NewFeedStack = () => {
-    const navigation = useNavigation();
-    const route = useRoute();
-    useFocusEffect(
-        React.useCallback(() => {
-            const hideTabBar = () =>
-                navigation
-                    .getParent()
-                    .setOptions({ tabBarStyle: { display: "none" } });
-            const showTabBar = () =>
-                navigation
-                    .getParent()
-                    .setOptions({ tabBarStyle: { display: "flex" } });
-
-            navigation.addListener("focus", hideTabBar);
-            navigation.addListener("blur", showTabBar);
-
-            return () => {
-                navigation.removeListener("focus", hideTabBar);
-                navigation.removeListener("blur", showTabBar);
-            };
-        }, [navigation])
-    );
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="posts" component={NewFeed} />
@@ -46,7 +23,6 @@ const NewFeedStack = () => {
                 name="search-destination"
                 component={SearchDestinationScreen}
             />
-
             <Stack.Screen
                 screenOptions={{
                     fotterShown: false,
@@ -55,10 +31,44 @@ const NewFeedStack = () => {
                 component={SaveScreen}
                 options={{
                     presentation: "formSheet",
+                    sheetAllowedDetents: "all",
+                    sheetCornerRadius: 30,
+                    sheetGrabberVisible: true,
+                }}
+            />
+            <Stack.Screen
+                name="create-collection"
+                component={CreateCollection}
+                options={{
+                    presentation: "formSheet",
                     sheetAllowedDetents: "large",
                     sheetCornerRadius: 30,
                     sheetGrabberVisible: true,
                 }}
+            />
+            <Stack.Screen
+                name="persion-pin"
+                component={PersionPin}
+                options={{
+                    presentation: "formSheet",
+                    sheetAllowedDetents: "all",
+                    sheetCornerRadius: 30,
+                    sheetGrabberVisible: true,
+                }}
+            />
+            <Stack.Screen
+                name="attraction-pin"
+                component={AttractionPin}
+                options={{
+                    presentation: "formSheet",
+                    sheetAllowedDetents: "medium",
+                    sheetCornerRadius: 30,
+                    sheetGrabberVisible: true,
+                }}
+            />
+            <Stack.Screen
+                name="detail-collection"
+                component={DetailCollection}
             />
         </Stack.Navigator>
     );
