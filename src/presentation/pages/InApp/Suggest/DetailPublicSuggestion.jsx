@@ -67,9 +67,17 @@ const DetailPublicSuggestion = () => {
 };
 const PostItem = ({ data }) => {
     const { images, description } = data.post;
-
+    const navigation = useNavigation();
     return (
-        <View className="w-full p-[10]">
+        <TouchableOpacity
+            onPress={() =>
+                navigation.navigate("new-feed", {
+                    screen: "detail-post",
+                    params: { post: data.post },
+                })
+            }
+            className="w-full p-[10]"
+        >
             <Image
                 className="h-[161px] w-full rounded-[15px] mb-[5]"
                 source={images[0]}
@@ -83,7 +91,7 @@ const PostItem = ({ data }) => {
                     Vietnam
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 export default DetailPublicSuggestion;

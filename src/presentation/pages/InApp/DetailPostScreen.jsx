@@ -165,12 +165,25 @@ const DetailPostScreen = ({ route }) => {
                         </View>
                     </View>
                     <View className="flex-row items-center gap-x-4">
-                        <View>
+                        <TouchableOpacity
+                            onPress={() =>
+                                navigation.navigate("map", {
+                                    post: [post.longitude, post.latitude],
+                                })
+                            }
+                        >
                             <Navigation />
-                        </View>
-                        <View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                navigation.navigate("save", {
+                                    postId: id,
+                                    postImage: images[0],
+                                });
+                            }}
+                        >
                             <Save />
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View>
@@ -221,7 +234,7 @@ const DetailPostScreen = ({ route }) => {
                             </TouchableOpacity>
                             <TouchableOpacity>
                                 <MaterialIcons name="" size={20} color="grey" />
-                            </TouchableOpacity>  
+                            </TouchableOpacity>
                         </View>
                         <TouchableOpacity onPress={createComment}>
                             <Send />

@@ -43,9 +43,13 @@ const AttractionPin = () => {
     }, []);
     return (
         <View className="flex-1 p-6">
-            <View className="flex-row justify-between items-center">
+            <View className="flex-row justify-between items-center pb-[8]">
                 <Pin2 />
-                <Text className="text-neutral-800 text-sm font-medium font-['Montserrat']">
+                <Text
+                    className="text-neutral-800 text-sm font-medium font-['Montserrat'] w-[200]"
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                >
                     {name}
                 </Text>
                 <LineDart />
@@ -61,7 +65,6 @@ const AttractionPin = () => {
                     <Loading />
                 ) : (
                     <FlatList
-                        horizontal
                         showsVerticalScrollIndicator={false}
                         data={posts}
                         renderItem={({ item }) => (

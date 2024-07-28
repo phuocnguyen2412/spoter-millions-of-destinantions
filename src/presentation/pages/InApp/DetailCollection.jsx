@@ -28,7 +28,7 @@ const DetailCollection = () => {
     return (
         <SafeAreaView className="flex-1 bg-neutral-50 ">
             <ContainerComponent>
-                <View className="flex-row justify-between items-center pyc-[15]">
+                <View className="flex-row justify-between items-center py-[15]">
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <BackRightToLeft />
                     </TouchableOpacity>

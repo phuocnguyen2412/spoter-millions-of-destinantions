@@ -9,10 +9,14 @@ import { ArrowDown, ArrowRightToLeft } from "../../assets/img/Button";
 import _countries from "../../data/contries";
 import Rating from "./Rating";
 
-const AccordionItem = ({ title, content, icon, description }) => {
+const AccordionItem = ({ title, content, icon, description, border }) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
     return (
-        <View className="my-4">
+        <View
+            className={`my-4 ${
+                border ? "rounded-[10px] border border-neutral-200 p-5" : ""
+            }`}
+        >
             <TouchableOpacity
                 className="flex-row items-center justify-between"
                 onPress={() => setIsCollapsed(!isCollapsed)}
@@ -20,7 +24,7 @@ const AccordionItem = ({ title, content, icon, description }) => {
                 <View className="flex-row items-center">
                     {icon && <View className="mr-3">{icon}</View>}
 
-                    <View className="flex-col items-center justify-center">
+                    <View className="flex-col ">
                         <Text className=" text-neutral-600 text-sm font-medium font-['Montserrat']">
                             {title}
                         </Text>

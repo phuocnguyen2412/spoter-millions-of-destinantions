@@ -31,7 +31,11 @@ import {
     LineDart,
     Microphone,
     Navigation,
+    Pin,
+    Pin2,
     Pin3,
+    Pin4,
+    Pin5,
     PinChallenge,
     PinMap,
     Save,
@@ -50,6 +54,7 @@ import PinImage from "../../../../assets/img/token.jpg";
 import { Image } from "expo-image";
 import attractions from "../../../../data/attraction";
 import attractionService from "../../../../services/attraction.service";
+
 Mapbox.setAccessToken(MAPBOX_API_PUBLIC_KEY || "");
 
 const MapScreen = () => {
@@ -220,7 +225,10 @@ const MapScreen = () => {
                             }}
                         >
                             <ImageBackground
-                                className="w-[30] h-[30] rounded-full overflow-hidden"
+                                className="w-[30] h-[30] rounded-full overflow-hidden border-[#fafafa]"
+                                style={{
+                                    borderWidth: 2,
+                                }}
                                 source={{ uri: post.images[0] }}
                             ></ImageBackground>
                         </PointAnnotation>
@@ -229,6 +237,7 @@ const MapScreen = () => {
                 {attractions &&
                     attractions.map((attraction, index) => (
                         <PointAnnotation
+                            draggable={false}
                             key={`point-${index}`}
                             id={`point-${index}`}
                             coordinate={[
@@ -242,15 +251,11 @@ const MapScreen = () => {
                                 })
                             }
                         >
-                            <View className="rounded-full overflow-hidden">
-                                <ImageBackground
-                                    className="w-[33] h-[40]  items-center justify-center overflow-hidden "
-                                    source={require("../../../../assets/img/pin-attraction.jpg")}
-                                >
-                                    <Text className="text-white text-sm font-bold font-['Montserrat']">
-                                        +{Math.round(Math.random() * 10000)}
-                                    </Text>
-                                </ImageBackground>
+                            <View className="relative">
+                                <Pin5 width={40} height={40} />
+                                <Text className="z-10 absolute top-[9] left-[8] text-white text-xs font-bold font-['Montserrat']">
+                                    {Math.round(Math.random() * 1000)}
+                                </Text>
                             </View>
                         </PointAnnotation>
                     ))}

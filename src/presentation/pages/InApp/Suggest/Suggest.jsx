@@ -29,6 +29,8 @@ import {
     Distance,
     Line,
     PersonReview,
+    Pin,
+    Pin2,
     PinFilter,
     Star,
 } from "../../../../assets/img/Button";
@@ -130,7 +132,13 @@ const Suggest = () => {
                                 />
 
                                 <AccordionItem
-                                    icon={<PinFilter />}
+                                    icon={
+                                        <Pin
+                                            height={20}
+                                            width={20}
+                                            fill="#525252"
+                                        />
+                                    }
                                     title={"Country"}
                                     content={<CountryCollapsible />}
                                 />

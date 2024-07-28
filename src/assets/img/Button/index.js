@@ -77,7 +77,13 @@ import Add2 from "./add2.svg";
 import Pin4 from "./pin4.svg";
 import Pen2 from "./pen2.svg";
 import Wallet2 from "./wallet2.svg";
+import Pin5 from "./pin5.svg";
+import Ruby from "./ruby.svg";
+import Diamond from "./diamond.svg";
 export {
+    Diamond,
+    Ruby,
+    Pin5,
     Wallet2,
     Add2,
     Pin4,

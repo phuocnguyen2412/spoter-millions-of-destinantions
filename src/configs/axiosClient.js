@@ -16,6 +16,7 @@ axiosClient.interceptors.request.use(
             config.headers["Authorization"] =
                 "Bearer " + accessToken.accessToken;
         }
+
         return config;
     },
     (error) => {

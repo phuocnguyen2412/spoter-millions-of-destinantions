@@ -27,11 +27,16 @@ const LoginScreen = () => {
     const handleLogin = async () => {
         try {
             setIsLoading(true);
+            const data = {
+                username: userInfo.username.toLowerCase(),
+                password: userInfo.password,
+            }
+            console.log(data);
             const response = await authService.login(
                 userInfo.username.toLowerCase(),
                 userInfo.password
             );
-
+            console.log(response);
             await setDataStorage("account", response.data);
             navigation.replace("in-app", { screen: "NewFeedScreen" });
         } catch (error) {

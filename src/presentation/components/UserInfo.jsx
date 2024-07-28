@@ -11,6 +11,7 @@ const UserInfo = ({
     textDark = false,
     disableAdd = false,
     style,
+    isSponser,
 }) => {
     const styles = StyleSheet.create({
         userImage: {
@@ -67,7 +68,7 @@ const UserInfo = ({
                         style={styles.postTime}
                         className="text-[11px] font-['Montserrat']"
                     >
-                        {timeElapsed(postTime)}
+                        {isSponser ? "Sponsered" : timeElapsed(postTime)}
                     </Text>
                 )}
             </View>

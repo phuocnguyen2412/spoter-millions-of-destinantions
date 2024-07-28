@@ -8,11 +8,16 @@ import {
 } from "react-native";
 import React from "react";
 import collectionService from "../../../../services/collection.service";
-import Collection from "../../../components/Collection";
+
 import Loading from "../../../components/Loading";
 import { useNavigation } from "@react-navigation/native";
-import { Filter, KinhLup } from "../../../../assets/img/Button";
+import {
+    Collection as CollectionIcon,
+    Filter,
+    KinhLup,
+} from "../../../../assets/img/Button";
 import { Icon } from "iconsax-react-native";
+import Collection from "../../../components/Collection";
 
 const CollectionSuggestion = () => {
     const [collections, setCollections] = React.useState([]);
@@ -56,13 +61,13 @@ const CollectionSuggestion = () => {
                     <View>
                         <TouchableOpacity
                             onPress={() => navigation.navigate("suggests")}
-                            className="w-[50px] h-[50px] px-3.5 py-[15px] rounded-[25px] border border-neutral-300 flex-col justify-between items-center inline-flex"
+                            className="w-[50px] h-[50px]  rounded-[25px] border border-neutral-300 flex-col justify-center items-center "
                         >
-                            <Icon name="apps" />
+                            <CollectionIcon />
                         </TouchableOpacity>
                     </View>
                 </View>
-                {isLoading && collections.length > 0 ? (
+                {isLoading && collections.length == 0 ? (
                     <Loading />
                 ) : (
                     <FlatList

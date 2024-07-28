@@ -11,6 +11,9 @@ const attractionService = {
             params: { offset, limit, attractionId },
         });
     },
+    addAttraction: async (data) => {
+        return axiosClient.post("/post", data);
+    },
 };
 
 export default attractionService;

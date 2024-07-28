@@ -23,12 +23,7 @@ export const PostCard = ({ post }) => {
         description,
         attraction = {},
     } = post;
-    const {
-        placeName = "",
-        address = "",
-        city = "",
-        country = "",
-    } = attraction || {};
+    console.log(post.attraction);
     const [liked, setLiked] = useState(false);
     const [likeNumber, setLikeNumber] = useState(likes);
     const [colors, setColors] = useState({
@@ -157,11 +152,13 @@ export const PostCard = ({ post }) => {
                     <Text className="text-black text-[14px] font-normal font-['Montserrat']">
                         {description}
                     </Text>
-                    <View className="flex-row items-center justify-end">
-                        <Pin className="mr-[5]" />
-                        <Text className=" text-neutral-600 text-[10px] font-normal font-['Montserrat']">
-                            {(placeName, address, city, country)}
-                        </Text>
+                    <View className="flex-row justify-end mt-1">
+                        <View className="flex-row items-center justify-end">
+                            <Pin className="mr-[5]" />
+                            <Text className=" text-neutral-600 text-[10px] font-normal font-['Montserrat']">
+                                {`${post.attraction?.placeName}, ${post.attraction?.city}, ${post.attraction?.country}`}
+                            </Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
             </LinearGradient>

@@ -15,7 +15,13 @@ const Stack = createNativeStackNavigator();
 const NewFeedStack = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="posts" component={NewFeed} />
+            <Stack.Screen
+                name="posts"
+                component={NewFeed}
+                initialParams={{
+                    isPostSuccess: false,
+                }}
+            />
             <Stack.Screen name="detail-post" component={DetailPostScreen} />
             <Stack.Screen name="map" component={MapScreen} />
             <Stack.Screen name="notification" component={NotificationScreen} />

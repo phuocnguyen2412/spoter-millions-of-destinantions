@@ -118,6 +118,7 @@ const SavedComponent = ({ image }) => {
 };
 const UnsavedComponent = ({ data, postId, fetchData }) => {
     const { name, description, image, isAdded, id } = data;
+    const [checked, setChecked] = React.useState(isAdded);
     const navigation = useNavigation();
     const handleAdd = async () => {
         try {
@@ -134,13 +135,15 @@ const UnsavedComponent = ({ data, postId, fetchData }) => {
 
     const handleRemove = async () => {
         try {
-            setIsLoading(true);
-            await collectionService.removeItemFromCollection(id, postId);
+            const res = await collectionService.removeItemFromCollection(
+                id,
+                postId
+            );
+
             fetchData();
         } catch (err) {
             console.log(err);
         } finally {
-            setIsLoading(false);
         }
     };
     return (
@@ -171,9 +174,12 @@ const UnsavedComponent = ({ data, postId, fetchData }) => {
                 </View>
             </View>
             <TouchableOpacity
-                onPress={() => (isAdded ? handleRemove() : handleAdd())}
+                onPress={() => {
+                    setChecked(!checked);
+                    checked ? handleRemove() : handleAdd();
+                }}
             >
-                {isAdded ? <Checked /> : <Add />}
+                {checked ? <Checked /> : <Add />}
             </TouchableOpacity>
         </TouchableOpacity>
     );

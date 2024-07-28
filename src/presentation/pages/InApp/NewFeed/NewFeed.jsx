@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
 import { TouchableOpacity, View } from "react-native";
 import { NewPostLogo } from "../../../../assets/img/Button";
@@ -10,14 +10,17 @@ import ContainerComponent from "../../../components/ContainerComponent";
 import Loading from "../../../components/Loading";
 import { PostCard } from "../../../components/PostCard";
 import color from "../../../contants/color";
+import NotificationComponent from "../../../components/NotificationComponent";
 const NewFeed = () => {
     const [loading, setLoading] = React.useState(false);
     const [posts, setPosts] = React.useState([]);
     const [page, setPage] = React.useState(0);
+    const [modalVisible, setModalVisible] = React.useState(false);
+
     const fetchData = async () => {
         try {
             setLoading(true);
-            const data = await feedService.getAllFeed(8, page);
+            const data = await feedService.getAllFeed(10, page);
             setPosts([...posts, ...data.data]);
         } catch (error) {
             console.log(error);
@@ -66,6 +69,10 @@ const NewFeed = () => {
                         data={posts}
                         renderItem={({ item }) => <PostCard post={item} />}
                         estimatedItemSize={10}
+                    />
+                    <NotificationComponent
+                        setModalVisible={setModalVisible}
+                        modalVisible={modalVisible}
                     />
                 </ContainerComponent>
             )}

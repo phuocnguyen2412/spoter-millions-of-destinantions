@@ -96,7 +96,7 @@ const Accordion = ({ images }) => {
                     <Form
                         title="Evaluate"
                         description="Rate this place"
-                        icon={<Rating />}
+                        icon={<Rating defaultRating={4} />}
                     />
                 </View>
             </Animated.View>

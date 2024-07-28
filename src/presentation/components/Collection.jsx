@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default Collection = ({ data, onPress }) => {
     const navigation = useNavigation();
-    console.log(data);
+
     return (
         <View className="mb-5 w-full">
             <TouchableOpacity
@@ -30,7 +30,7 @@ export default Collection = ({ data, onPress }) => {
                     <Image
                         key={index}
                         source={post.post.images[0]}
-                        className="w-[120] h-[120] rounded-[10px]"
+                        className="w-[100] h-[100] rounded-[10px]"
                     />
                 ))}
             </View>

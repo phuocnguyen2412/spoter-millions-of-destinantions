@@ -13,21 +13,25 @@ import {
     Add2,
     BackLeftToRight,
     BackRightToLeft,
+    Diamond,
     DropDown,
     Pen2,
     Pin4,
+    Ruby,
     Wallet2,
 } from "../../../../assets/img/Button";
 import RadioGroup from "react-native-radio-buttons-group";
 import Slider from "@react-native-community/slider";
 import stripeService from "../../../../services/stripe.service";
 import { useNavigation } from "@react-navigation/native";
+import { Image } from "expo-image";
+import attractionService from "../../../../services/attraction.service";
 
-const PaymentItem = () => {
+const PaymentItem = ({ idPackage }) => {
     const navigation = useNavigation();
     const handlePayment = async () => {
         try {
-            const res = await stripeService.CheckoutSession(2);
+            const res = await stripeService.CheckoutSession(idPackage);
             console.log(res);
             navigation.navigate("stripe", { uri: res.data.checkoutUrl });
         } catch (error) {
@@ -35,36 +39,41 @@ const PaymentItem = () => {
         }
     };
     return (
-        <TouchableOpacity onPress={handlePayment}>
+        <TouchableOpacity onPress={handlePayment} className="ml-5">
             <View className="flex-row items-center justify-between">
                 <View className="flex-row items-center gap-x-3">
                     <Wallet2 />
                     <View>
                         <Text className="text-neutral-600 text-sm font-semibold font-['Montserrat']">
-                            Make a Purchase
+                            Stripe
                         </Text>
                         <Text className="text-neutral-400 text-xs font-normal font-['Montserrat']">
-                            Select a payment method
+                            Financial Infrastructure
                         </Text>
                     </View>
                 </View>
-                <TouchableOpacity>
-                    <BackLeftToRight />
-                </TouchableOpacity>
             </View>
         </TouchableOpacity>
     );
 };
-const PostItem = () => {
+const PostItem = ({ info, handleChangeInfo }) => {
     return (
         <View className="mt-[15]">
             <View className="flex-row gap-x-5 mb-[20]">
                 <Pen2 />
-                <TextInput placeholder="Enter your describe" />
+                <TextInput
+                    value={info.description}
+                    onTextChange={(e) => handleChangeInfo("description", e)}
+                    placeholder="Enter your describe"
+                />
             </View>
             <View className="flex-row gap-x-5 mb-[20]">
                 <Pin4 />
-                <TextInput placeholder="Enter your describe" />
+                <TextInput
+                    onTextChange={(e) => handleChangeInfo("address", e)}
+                    value={info.address}
+                    placeholder="Enter your describe"
+                />
             </View>
             <View className="items-center justify-center">
                 <View className="w-[305px] h-[239px] px-[102px] py-[92px] bg-neutral-200 rounded-[20px] flex-col justify-center items-center">
@@ -173,9 +182,9 @@ const ObjectItem = () => {
         ],
         []
     );
-    const [isSelected, setSelection] = React.useState(false);
-    const [selectedId, setSelectedId] = React.useState();
-    const [valueDistance, setValueDistance] = React.useState(1);
+    const [selectedSexId, setSelectedSexId] = React.useState(1);
+    const [selectedAgeId, setSelectedAgeId] = React.useState(1);
+    const [selectedLocationId, setSelectedLocationId] = React.useState(1);
 
     return (
         <View>
@@ -187,8 +196,8 @@ const ObjectItem = () => {
                         marginVertical: 12,
                     }}
                     radioButtons={radioSex}
-                    onPress={setSelectedId}
-                    selectedId={selectedId}
+                    onPress={setSelectedSexId}
+                    selectedId={selectedSexId}
                 />
             </View>
             <View>
@@ -200,8 +209,8 @@ const ObjectItem = () => {
                             marginVertical: 12,
                         }}
                         radioButtons={radioAge}
-                        onPress={setSelectedId}
-                        selectedId={selectedId}
+                        onPress={setSelectedAgeId}
+                        selectedId={selectedAgeId}
                     />
                 </View>
             </View>
@@ -213,28 +222,62 @@ const ObjectItem = () => {
                         marginVertical: 12,
                     }}
                     radioButtons={radioLocation}
-                    onPress={setSelectedId}
-                    selectedId={selectedId}
+                    onPress={setSelectedLocationId}
+                    selectedId={selectedLocationId}
                 />
             </View>
         </View>
     );
 };
-const Package = ({ data }) => {
-    const { name, prize, description, image } = data;
+const PackageForm = ({ idPackage, handleSelectPackage }) => {
+    const data = [
+        { id: 1, image: require("../../../../assets/img/ruby.jpg") },
+        { id: 2, image: require("../../../../assets/img/diamond.jpg") },
+        { id: 3, image: require("../../../../assets/img/gold.jpg") },
+    ];
     return (
-        <View className="w-[305px] h-[213px] bg-[#973ca3]/10 rounded-[15px] shadow border border-[#973ca3]">
-            <View>
-                <Text>{name}</Text>
-                <Text>{prize}</Text>
-            </View>
-            <Text className="mt-[33] text-[#973ca3] text-[10px] font-normal font-['Montserrat']">
-                {description}    
-            </Text>
+        <View className="flex-col items-center">
+            {data.map((item) => (
+                <TouchableOpacity
+                    onPress={() => handleSelectPackage(item.id)}
+                    className={`p-[4] rounded-[15px] ${
+                        item.id === idPackage ? "border border-neutral-300" : ""
+                    } my-2`}
+                >
+                    <Image
+                        className="w-[305px] h-[213px] rounded-[15px] "
+                        source={item.image}
+                    />
+                </TouchableOpacity>
+            ))}
         </View>
     );
 };
+
 const CreateAds = () => {
+    const [idPackage, setIdPackage] = React.useState(3);
+    const [info, setInfo] = React.useState({});
+
+    const handleSelectPackage = (id) => {
+        setIdPackage(id);
+    };
+    const handleChangeInfo = (name, value) => {
+        setInfo({ ...info, [name]: value });
+    };
+    const handleCreateAttraction = async () => {
+        const data = {
+            description: info.description,
+            address: info.address,
+            advertisingPackageId: idPackage,
+            images: [
+                "https://dulichviet24h.vn/wp-content/uploads/2024/07/z5599338907677_c54961c6ad9b2a61fe9056685a233109.jpg",
+            ],
+            rate: 5,
+        };
+        const res = await attractionService.addAttraction(data);
+        console.log(res);
+        alert("Sucessfully added!");
+    };
     return (
         <SafeAreaView className="flex-1 bg-neutral-50">
             <ScrollView className=" px-6">
@@ -242,24 +285,38 @@ const CreateAds = () => {
                     Advertise articles
                 </Text>
                 <AccordionItem
+                    border={true}
                     title={"1. Object"}
                     description="Who will see your advertisement"
                     content={<ObjectItem />}
                 />
                 <AccordionItem
+                    border={true}
                     title={"2. Posts"}
                     description={"Describe your advertisement"}
-                    content={<PostItem />}
+                    content={
+                        <PostItem
+                            info={info}
+                            handleChangeInfo={handleChangeInfo}
+                        />
+                    }
                 />
                 <AccordionItem
+                    border={true}
                     title={"3. Advertising package"}
                     description={"Choose the appropriate advertising package"}
-                    content={<ObjectItem />}
+                    content={
+                        <PackageForm
+                            idPackage={idPackage}
+                            handleSelectPackage={handleSelectPackage}
+                        />
+                    }
                 />
                 <AccordionItem
+                    border={true}
                     title={"4. Payment"}
                     description={"Select a payment method"}
-                    content={<PaymentItem />}
+                    content={<PaymentItem idPackage={idPackage} />}
                 />
                 <View className="flex-row justify-between items-center">
                     <Text className="text-neutral-500 text-xs font-medium font-['Montserrat'] ">

@@ -30,19 +30,26 @@ const CreatePostScreen = () => {
     const navigation = useNavigation();
     const handleCreatePost = async () => {
         try {
-            const imageUrl = await fileService.uploadFile(images);
-            
-            let location = await Location.getCurrentPositionAsync({});
-            const data = {
-                description: caption.length > 0 ? caption : " ",
-                images: [imageUrl],
-                longitude: location.coords.longitude,
-                latitude: location.coords.latitude,
-                rate: 5,
-            };
-            console.log(data);
-            await feedService.createPost(data);
-            alert("Success!");
+            navigation.goBack();
+            navigation.navigate("new-feed", {
+                screen: "posts",
+                params: {
+                    isPostSuccess: true,
+                },
+            });
+
+            // const imageUrl = await fileService.uploadFile(images);
+
+            // let location = await Location.getCurrentPositionAsync({});
+            // const data = {
+            //     description: caption.length > 0 ? caption : " ",
+            //     images: [imageUrl],
+            //     longitude: location.coords.longitude,
+            //     latitude: location.coords.latitude,
+            //     rate: 5,
+            // };
+
+            // await feedService.createPost(data);
         } catch (error) {
             console.log(error);
         }
@@ -61,7 +68,7 @@ const CreatePostScreen = () => {
                         <Delete />
                     </TouchableOpacity>
                     <Text className="text-neutral-900 text-base leading-[18px]">
-                        Create a post
+                        Create a postasdasd
                     </Text>
                 </View>
 
